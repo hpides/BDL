@@ -1,6 +1,6 @@
 ## Hadoop Setup
 
-Now we configure the Hadoop on our Pi cluster with one namenode and 4 datanodes. When not otherwise stated all instructions have to be executed on all nodes.
+Now we configure the Hadoop on our Pi cluster with one Namenode and 4 Datanodes. When not otherwise stated all instructions have to be executed on all nodes.
 
 ### Hadoop Environment Variables
 
@@ -21,7 +21,7 @@ export HADOOP_USER_NAME="pi"
 export HADOOP_CLASSPATH=\$JAVA_HOME/lib/tools.jar
 ```
 
-Finally we have to configure hadoop. Therefore we change the configuration files as follows.
+Finaly we have to configure Hadoop. Therefor we change the configuration files as follows.
 
 ```
 sudo nano /opt/hadoop/etc/hadoop/core-site.xml
@@ -144,7 +144,7 @@ and adding
 export JAVA_HOME=/opt/java/jdk1.8.0_371
 ```
 
-On the namenode (node01) only, create a `workers` file in the `/opt/hadoop/etc/hadoop/` directory and add the 4 other nodes, one per line.
+On the Namenode (node01) only, create a `workers` file in the `/opt/hadoop/etc/hadoop/` directory and add the 4 other nodes, one per line.
 
 workers:
 
@@ -155,7 +155,7 @@ node04
 node05
 ```
 
-Finally, you can initialize the hdfs on the namenode with
+Finally, you can initialize the HDFS on the Namenode with
 
 ```
 hdfs namenode -format

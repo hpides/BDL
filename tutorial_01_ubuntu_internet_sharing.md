@@ -1,8 +1,14 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-Now we will setup the Ubuntu workstation to be able to share internet with the cluster.
+Now we will set up the Ubuntu workstation to be able to share internet with the cluster.
 
 ### Share the Internet Connection
+
+First route packets via the Pi cluster connection.
+
+```
+sudo ip route add 10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.10
+```
 
 Enable packet forwarding on your laptop.
 
@@ -20,7 +26,7 @@ sudo iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j
 sudo iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 ```
 
-When everything you should have the following additional route. You can check them with `ip route show` .
+When everything you should have the following additional route. You can check them with `ip route show`.
 
 ```shellscript
 ip route show

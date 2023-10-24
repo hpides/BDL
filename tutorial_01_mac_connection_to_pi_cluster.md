@@ -1,6 +1,6 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-Now we will setup the mac workstation to be able to ssh into the cluster nodes.
+Now we will set up the mac workstation to be able to ssh into the cluster nodes.
 
 ### Setup Workstation Network
 
@@ -8,7 +8,7 @@ After inserting the Ethernet USB Device into your laptop open the Network settin
 
 ![macSonomaSettings.png](pictures/macSonomaSettings.png)
 
-Than go to network settings. To do that click on the `Network` button.
+Then go to network settings. To do that click on the `Network` button.
 
 ![macSonomaGoToNetworkSettings.png](pictures/macSonomaGoToNetworkSettings.png)
 

@@ -1,6 +1,6 @@
 ## Hadoop Setup
 
-Now we install the dependencies required by hadoop. When not otherwise stated all instructions have to be executed on all nodes.
+Now we install the dependencies required by Hadoop. When not otherwise stated all instructions have to be executed on all nodes.
 
 ### Prerequisites
 

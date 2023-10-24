@@ -4,7 +4,7 @@ Now we will enable passwordless ssh between the Pi cluster nodes and create a se
 
 ### Setup Passwordless SSH on Pi Nodes
 
-This section has to be repeat for each node. Connect to the node with `ssh pi@node0<nodeID>`. Once you successfully SSH into the PI, upgrade the package manager with:
+This section has to be repeated for each node. Connect to the node with `ssh pi@node0<nodeID>`. Once you successfully SSH into the PI, upgrade the package manager with:
 
 ```
 ssh pi@node0<nodeID>
@@ -26,8 +26,8 @@ ssh-copy-id -o StrictHostKeyChecking=accept-new pi@node05
 
 ### Separate Environemnt Variables File
 
-As a last step we create a separate file that will contain all environment variables. In this file we will add all necessary environment variables and PATH extantions that are required by the architectures that we will use.
-We create a `~/.environment_variables` file that will be always executed by the `~/.bashrc` file when logging into the Pis. Therefore we add a line to the start of the `~/.bashrc` file.
+As a last step we create a separate file that will contain all environment variables. In this file we will add all necessary environment variables and PATH extensions that are required by the architectures that we will use.
+We create a `~/.environment_variables` file that will always be executed by the `~/.bashrc` file when logging into the Pis. Therefor we add a line to the start of the `~/.bashrc` file.
 
 .bashrc:
 

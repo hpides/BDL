@@ -1,6 +1,6 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-Now we will setup the Windows workstation to be able to ssh into the cluster nodes.
+Now we will set up the Windows workstation to be able to ssh into the cluster nodes.
 
 ### Setup Workstation Network
 

@@ -1,6 +1,6 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-Now we will setup the Windows workstation to be able to share internet with the cluster.
+Now we will set up the Windows workstation to be able to share internet with the cluster.
 
 ### Share the Internet Connection
 

@@ -1,6 +1,6 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-This tutorial describes how to setup the physical part of our Raspberry Pi Cluster with 5 Nodes.
+This tutorial describes how to set up the physical part of our Raspberry Pi Cluster with 5 Nodes.
 
 ### Hardware-List
 
