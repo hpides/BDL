@@ -4,7 +4,7 @@ Now we install an operating system for the Pi cluster nodes.
 
 ### Prepare Micro SD Cards
 
-We already inserted the SD-Cards into the Pi cluster. You need to remove them one by one and follow the instructions. After that, we setup our SD-Cards and install the OS for our Raspberry Pis. Download the Raspberry Pi Imager [here](https://www.raspberrypi.com/software/https://www.raspberrypi.com/software/) and plug in your SD-Card. Select **Raspberry Pi OS Lite (64 Bit)** as the operating system of the Pi nodes.
+We already inserted the SD-Cards into the Pi cluster. You need to remove them one by one and follow the instructions. After that, we setup our SD-Cards and install the OS for our Raspberry Pis. Download the Raspberry Pi Imager [here](https://www.raspberrypi.com/software/) and plug in your SD-Card. Select **Raspberry Pi OS Lite (64 Bit)** as the operating system of the Pi nodes.
 
 ![img01.png](pictures/img01.png)
 
