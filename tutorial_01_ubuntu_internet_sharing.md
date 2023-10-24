@@ -4,12 +4,6 @@ Now we will setup the Ubuntu workstation to be able to share internet with the c
 
 ### Share the Internet Connection
 
-First route packets via the Pi cluster connection.
-
-```
-sudo ip route add 10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.10
-```
-
 Enable packet forwarding on your laptop.
 
 ```
