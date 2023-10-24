@@ -34,7 +34,7 @@ Next setup an IP for the Pi cluster connection on your working station or laptop
 sudo ip addr add 10.0.0.10 dev eth1
 ```
 
-Finally add all the node names to your laptop by modifying your `/etc/hosts`  file. Add the mapping of hostnames to IPs to the end of the file.
+Next add all the node names to your laptop by modifying your `/etc/hosts`  file. Add the mapping of hostnames to IPs to the end of the file.
 
 hosts:
 
@@ -47,6 +47,12 @@ hosts:
 10.0.0.3	node03
 10.0.0.4	node04
 10.0.0.5	node05
+```
+
+Finally route packets via the Pi cluster connection.
+
+```
+sudo ip route add 10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.10
 ```
 
 Now you are able to connect to the pi nodes with e.g. `ssh pi@node01` when they are running.
