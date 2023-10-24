@@ -36,7 +36,8 @@ sudo chown pi:hadoop -R /opt/hadoop_tmp/hdfs/datanode
 
 ### Hadoop Files
 
-First we have to exit from the node to copy the hadoop package to the node. Afterwards we have to ssh again into the node and extract hadoop to the `/opt/` folder and change the
+First download `hadoop-3.3.6.tar.gz` from the internet. Use Google to find it.
+Next we have to exit from the node to copy the hadoop package to the node. Afterwards we have to ssh again into the node and extract hadoop to the `/opt/` folder and change the
 
 ```
 exit
