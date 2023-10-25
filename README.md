@@ -17,4 +17,8 @@ The order how you suppose to read the Readmes is
  7. `tutorial_03_hadoop_dependencies.md`
  8. `tutorial_03_hadoop_installation.md`
  9. `tutorial_03_hadoop_settings.md`
-19. `tutorial_03_hadoop_word_count_example.md`
+10. `tutorial_03_hadoop_word_count_example.md`
+11. `tutorial_04_monitoring_install_node_exporter.md`
+12. `tutorial_04_monitoring_install_prometheus.md`
+13. `tutorial_04_monitoring_install_v_grafana.md`
+14. `tutorial_04_monitoring_visual_dashboard_setup.md`
