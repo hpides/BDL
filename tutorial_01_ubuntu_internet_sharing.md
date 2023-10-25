@@ -25,5 +25,7 @@ When everything you should have the following additional route. You can check th
 ```bash
 ip route show
 
+[...]
 10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.10
+[...]
 ```
