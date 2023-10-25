@@ -58,6 +58,7 @@ Click on `Save changes` and `Close`. Afterwards you should see a similar dashboa
 Now you can download the benchmarking tool `Fio` and test if the dashboard will change when we run a simple read write example.
 
 ```bash
+ssh pi@node05
 sudo apt --yes install fio
 fio --rw=readwrite --name=test --size=1000M --direct=1 --bs=1M
 ```
