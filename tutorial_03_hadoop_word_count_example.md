@@ -4,17 +4,17 @@ Now we run the typical word count example on Hadoop.
 
 ### Word Count Example
 
-First we have to start the Hadoop. Start the `HDFS` using the script `/opt/Hadoop/sbin/start-dfs.sh`. If you did the setup correctly, you should be able to print the DFS report with `hdfs dfsadmin -report`. Please verify, that you have 4 Live Datanodes. Then start the resource manager `/opt/Hadoop/sbin/start-yarn.sh`.
+First we have to start the Hadoop. Start the `HDFS` using the script `/opt/hadoop/sbin/start-dfs.sh`. If you did the setup correctly, you should be able to print the DFS report with `hdfs dfsadmin -report`. Please verify, that you have 4 Live Datanodes. Then start the resource manager `/opt/hadoop/sbin/start-yarn.sh`.
 
-```
-/opt/Hadoop/sbin/start-dfs.sh
+```bash
+/opt/hadoop/sbin/start-dfs.sh
 hdfs dfsadmin -report
-/opt/Hadoop/sbin/start-yarn.sh
+/opt/hadoop/sbin/start-yarn.sh
 ```
 
 Create input and output directories in `hdfs`.
 
-```
+```bash
 hdfs dfs -mkdir -p /WordCount
 hdfs dfs -mkdir -p /WordCount/input
 hdfs dfs -mkdir -p /WordCount/output
@@ -22,7 +22,7 @@ hdfs dfs -mkdir -p /WordCount/output
 
 Now we create an example input file `file01` and load it to the input folder of the cluster.
 
-```
+```bash
 echo "The cat is red The dog is blue A mouse is running A human is going to sleep The cat is sleeping The dog is going to sleep
 A mouse is running A human is running The cat is blue A dog is blue A mouse is sleeping A human is red A cat is going to sleep The dog is red A mouse is blue A human is going to sleep
 A cat is running The dog is sleeping A mouse is blue A human is running The cat is blue A dog is blue A mouse is going to sleep A human is red A cat is going to sleep The dog is running A mouse is red A human is sleeping The cat is red The dog is blue
@@ -43,19 +43,19 @@ Now we need to write the map reduce program that reads `file01` and counts the w
 
 WordCount.java:
 
-```shellscript
+```
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.apache.Hadoop.conf.Configuration;
-import org.apache.Hadoop.fs.Path;
-import org.apache.Hadoop.io.IntWritable;
-import org.apache.Hadoop.io.Text;
-import org.apache.Hadoop.mapreduce.Job;
-import org.apache.Hadoop.mapreduce.Mapper;
-import org.apache.Hadoop.mapreduce.Reducer;
-import org.apache.Hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.Hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class WordCount {
 
@@ -109,20 +109,20 @@ public class WordCount {
 
 Next we compile our program, run it with Hadoop and print the output. When everything went well you should see the counts for each word. When you rerun the program you need to remove the output directory.
 
-```shellscript
-Hadoop com.sun.tools.javac.Main WordCount.java
+```bash
+hadoop com.sun.tools.javac.Main WordCount.java
 jar cf WordCount.jar WordCount*.class
 rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount.class
 
 hdfs dfs -rm -r /WordCount/output
-Hadoop jar WordCount.jar WordCount /WordCount/input /WordCount/output
+hadoop jar WordCount.jar WordCount /WordCount/input /WordCount/output
 
 hdfs dfs -cat /WordCount/output/part-r-00000
 ```
 
 To stop Hadoop first stop the resource manager and then stop the `hdfs`.
 
-```
-/opt/Hadoop/sbin/stop-yarn.sh
-/opt/Hadoop/sbin/stop-yarn.sh
+```bash
+/opt/hadoop/sbin/stop-yarn.sh
+/opt/hadoop/sbin/stop-yarn.sh
 ```

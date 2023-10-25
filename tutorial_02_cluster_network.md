@@ -8,19 +8,19 @@ First we give each cluster node a static IP. Mount bootfs on the SD card. On Ubu
 
 Next we set up the network and ssh for each Pi node. First open a Terminal and login to the node with `ssh pi@node0<nodeID>`\`. The password is as previously selected `raspberry`.
 
-```shellscript
+```bash
 ssh pi@node0<nodeID>
 ```
 
 On the Pi we first set up the network interface. Create a new file `/etc/network/interfaces.d/eth0` and add the node IP, the Netmask with Subnet length 24, the workstation IP as the default gateway and Googles server as the DNS nameserver.
 
-```
+```bash
 sudo nano /etc/network/interfaces.d/eth0
 ```
 
 eth0:
 
-```shellscript
+```
 auto eth0
 iface eth0 inet static
 	address 10.0.0.<nodeID>
@@ -31,7 +31,7 @@ iface eth0 inet static
 
 Next also modify `/etc/hosts` as previously on your laptop such that each node of the cluster can see all other nodes. Add the mapping of hostnames to IPs to the end of the file.
 
-```
+```bash
 sudo nano /etc/hosts
 ```
 

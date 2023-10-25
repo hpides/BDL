@@ -11,7 +11,7 @@ You have already done the *Build a HCP-Cluster with Raspberry Pis* tutorial and 
 First download `jdk-8u371-linux-aarch64.tar.gz` from the internet. Use Google for it.
 Next copy the `jdk-8u371-linux-aarch64.tar.gz` to the Pi and ssh into the Pi. Extract the JDK into the folder `/opt/java`.
 
-```
+```bash
 scp [...]/dependencies/jdk-8u371-linux-aarch64.tar.gz node01:~
 ssh pi@node01
 sudo mkdir -p /opt/java
@@ -23,14 +23,14 @@ Finish the java installation by adding `JAVA_HOME` to our `~/.environment_variab
 
 .environment_variables:
 
-```shellscript
+```
 export JAVA_HOME=/opt/java/jdk1.8.0_371
 export PATH=$PATH:/opt/java/jdk1.8.0_371/bin
 ```
 
 Verify your JAVA installation.
 
-```
+```bash
 java -version
 openjdk version "1.8.0_382"
 OpenJDK Runtime Environment (build 1.8.0_382-8u382~b04-2-b04)

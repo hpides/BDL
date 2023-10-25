@@ -1,12 +1,12 @@
 ## Build a HPC-Cluster with Raspberry Pis
 
-Now we will setup the Ubuntu workstation to be able to ssh into the cluster nodes.
+Now we will set up the Ubuntu workstation to be able to ssh into the cluster nodes.
 
 ### Setup Workstation Network
 
 First insert the Ethernet USB adapter into your laptop and then figure out which Ethernet device is connected to the internet and which Ethernet device is connected to the Pi cluster. `ifconfig -a` helps you to figure out the device name. In the following example is `eth0` the device connected to the internet and `eth1` the device connected to the Pi cluster.
 
-```
+```bash
 ifconfig -a
 
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -28,9 +28,15 @@ eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
+Another option is to look at the last Ethernet interface that was activated in the journal log.
+
+```bash
+journalctl -n 10000 -e -u NetworkManager | grep "state change: activated -> deactivating" | tail -1 | sed -e 's/.*device (\(.*\)): state.*/\1/'
+```
+
 Next we set up an IP for the Pi cluster connection on your working station or laptop. Set as the IP `10.0.0.10`, the Netmask with Subnet length 24 and make sure that you replace `eth1` with your network interface name.
 
-```shellscript
+```bash
 sudo nmcli con add type ethernet con-name "Pi_Cluster" ifname eth1 ipv4.addresses 10.0.0.10/24 ipv4.method manual
 ```
 

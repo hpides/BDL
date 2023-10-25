@@ -6,7 +6,7 @@ Now we add the user to the Hadoop group and install the Hadoop files for the Had
 
 First we create a Hadoop group, and then we add pi to the group.
 
-```
+```bash
 sudo addgroup Hadoop
 sudo adduser pi Hadoop
 ```
@@ -15,7 +15,7 @@ sudo adduser pi Hadoop
 
 Next we create the folder structure for Hadoop and change the permissions.
 
-```
+```bash
 sudo mkdir /opt/Hadoop_tmp/
 sudo mkdir /opt/Hadoop_tmp/hdfs
 
@@ -26,7 +26,7 @@ sudo mkdir /opt/Hadoop_tmp/hdfs
 
 For the Namenode and data nodes we have to create different additional folders.
 
-```
+```bash
 # On the namenode (node01)
 sudo chown pi:Hadoop -R /opt/Hadoop_tmp/hdfs/namenode
 
@@ -39,7 +39,7 @@ sudo chown pi:Hadoop -R /opt/Hadoop_tmp/hdfs/datanode
 First download `Hadoop-3.3.6.tar.gz` from the internet. Use Google to find it.
 Next we have to exit from the node to copy the Hadoop package to the node. Afterwards we have to ssh again into the node and extract Hadoop to the `/opt/` folder and change the
 
-```
+```bash
 exit
 scp [...]/dependencies/Hadoop-3.3.6.tar.gz node01:~
 ssh pi@node01

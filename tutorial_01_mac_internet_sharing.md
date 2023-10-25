@@ -6,7 +6,7 @@ Now we will setup the mac workstation to be able to share internet with the clus
 
 First we enable IP forwarding. Open a shell and enable ip forwarding with `sysctl`.
 
-```
+```bash
 sudo sysctl -w net.inet.ip.forwarding=1
 sudo sysctl -w net.inet6.ip6.forwarding=1
 ```
@@ -22,7 +22,7 @@ nat on en0 from 10.0.0.0/24 to any -> en0
 
 Next we apply the new NAT rules. For that purpose we deactivate the packet filter device controller, flush all rules and enable our new rules. For that run the following commands in the terminal.
 
-```
+```bash
 sudo pfctl -d
 sudo pfctl -F all
 sudo pfctl -e -f ./nat-rules

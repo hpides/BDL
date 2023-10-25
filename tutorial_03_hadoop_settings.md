@@ -21,9 +21,9 @@ export HADOOP_USER_NAME="pi"
 export HADOOP_CLASSPATH=\$JAVA_HOME/lib/tools.jar
 ```
 
-Finaly we have to configure Hadoop. Therefor we change the configuration files as follows.
+Finally we have to configure Hadoop. Therefor we change the configuration files as follows.
 
-```
+```bash
 sudo nano /opt/hadoop/etc/hadoop/core-site.xml
 ```
 
@@ -40,7 +40,7 @@ sudo nano /opt/hadoop/etc/hadoop/core-site.xml
 </configuration>
 ```
 
-```
+```bash
 sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 ```
 
@@ -68,7 +68,7 @@ sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 </configuration>
 ```
 
-```
+```bash
 sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 ```
 
@@ -98,7 +98,7 @@ sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 </configuration>
 ```
 
-```
+```bash
 sudo nano /opt/hadoop/etc/hadoop/mapred-site.xml
 ```
 
@@ -134,7 +134,7 @@ sudo nano /opt/hadoop/etc/hadoop/mapred-site.xml
 
 Then, you need to add an environment variable to Hadoop by typing
 
-```
+```bash
 sudo nano /opt/hadoop/etc/hadoop/hadoop-env.sh
 ```
 
@@ -157,6 +157,6 @@ node05
 
 Finally, you can initialize the HDFS on the Namenode with
 
-```
+```bash
 hdfs namenode -format
 ```
