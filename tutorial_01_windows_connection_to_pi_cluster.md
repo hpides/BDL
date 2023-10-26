@@ -63,7 +63,6 @@ hosts:
 10.0.0.3	node03
 10.0.0.4	node04
 10.0.0.5	node05
-# End of section
 ```
 
 Now you are able to connect to the pi nodes with e.g. `ssh pi@node01` when they are running.
