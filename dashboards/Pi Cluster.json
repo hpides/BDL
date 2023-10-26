@@ -37,7 +37,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "Percentage",
+            "axisLabel": "Avg Percentage",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -109,7 +109,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "100 * (avg by(job) (1 - irate(node_cpu_seconds_total{mode=\"idle\"}[30s])))",
+          "expr": "100 - (avg by (job) (irate(node_cpu_seconds_total{mode=\"idle\"}[10m]) * 100))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -136,7 +136,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "MegaBytes Used",
+            "axisLabel": "GB",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -208,7 +208,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "avg by(job) (node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / 1024 / 1024",
+          "expr": "sum by(job) (node_memory_MemTotal_bytes - node_memory_MemFree_bytes) / 1024 / 1024 / 1024",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -236,7 +236,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "MegaBytes Transmitted",
+            "axisLabel": "MB/s Transmitted",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -318,7 +318,7 @@
           "useBackend": false
         }
       ],
-      "title": "Bandwidth Usage",
+      "title": "Network Usage",
       "type": "timeseries"
     },
     {
@@ -335,7 +335,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "MegaBytes Received",
+            "axisLabel": "MB/s Received",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -417,7 +417,7 @@
           "useBackend": false
         }
       ],
-      "title": "Bandwidth Usage",
+      "title": "Network Usage",
       "type": "timeseries"
     },
     {
@@ -434,7 +434,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "MegaBytes Read",
+            "axisLabel": "MB/s Read",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -506,7 +506,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(job) (irate(node_disk_read_bytes_total[30s])) / 1024 / 1024",
+          "expr": "sum by(job) (irate(node_disk_read_bytes_total{device=\"mmcblk0\"}[30s])) / 1024 / 1024",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": false,
@@ -534,7 +534,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "MegaBytes Written",
+            "axisLabel": "MB/s Written",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -606,7 +606,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum by(job) (irate(node_disk_written_bytes_total[30s])) / 1024 / 1024",
+          "expr": "sum by(job) (irate(node_disk_written_bytes_total{device=\"mmcblk0\"}[30s])) / 1024 / 1024",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": false,
@@ -648,6 +648,6 @@
   "timezone": "",
   "title": "Pi Cluster",
   "uid": "e4041820-ae08-4330-a1b7-b4fe67a0fa07",
-  "version": 11,
+  "version": 4,
   "weekStart": ""
 }
