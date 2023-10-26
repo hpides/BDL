@@ -60,5 +60,6 @@ Now you can download the benchmarking tool `Fio` and test if the dashboard will 
 ```bash
 ssh pi@node05
 sudo apt --yes install fio
-fio --rw=readwrite --name=test --size=1000M --direct=1 --bs=1M
+fio --rw=read --name=test --size=2000M --direct=1 --bs=1M
+fio --rw=write --name=test --size=2000M --direct=1 --bs=1M
 ```
