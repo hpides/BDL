@@ -34,6 +34,7 @@ ExecStart=/home/pi/prometheus/prometheus \
 [Install]
 WantedBy=multi-user.target
 EOF
+}
 ```
 
 Next we configure Prometheus to access the node_exporters on all nodes.
