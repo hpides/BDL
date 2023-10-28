@@ -2,3 +2,5 @@ imgs
 dependencies
 scripts
 *nat-rules
+.metals
+.vscode
