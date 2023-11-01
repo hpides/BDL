@@ -29,13 +29,12 @@ iface eth0 inet static
 	dns-nameserver 8.8.8.8
 ```
 
-Next also modify `/etc/hosts` as previously on your laptop such that each node of the cluster can see all other nodes. Add the mapping of hostnames to IPs to the end of the file.
+Next also modify `/etc/hosts` as previously on your laptop such that each node of the cluster can see all other nodes. Add the mapping of hostnames to IPs to the end of the file. **Remove the line containing the loopback address** `127.0.1.1 node0[1-5]`
 
 ```bash
 sudo nano /etc/hosts
 ```
-
-hosts:
+hosts: 
 
 ```
 [...]
