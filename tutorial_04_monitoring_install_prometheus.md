@@ -16,8 +16,7 @@ mv prometheus-2.22.0.linux-armv7/ prometheus
 Next we create a
 
 ```bash
-configurePrometheus () {
-	sudo tee /etc/systemd/system/prometheus.service << EOF
+sudo tee /etc/systemd/system/prometheus.service << EOF
 [Unit]
 Description=Prometheus Server
 Documentation=https://prometheus.io/docs/introduction/overview/
