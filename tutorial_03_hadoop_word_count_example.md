@@ -124,5 +124,5 @@ To stop Hadoop first stop the resource manager and then stop the `hdfs`.
 
 ```bash
 /opt/hadoop/sbin/stop-yarn.sh
-/opt/hadoop/sbin/stop-yarn.sh
+/opt/hadoop/sbin/stop-dfs.sh
 ```
