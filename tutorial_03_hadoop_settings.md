@@ -18,7 +18,7 @@ export PATH=$PATH:$HADOOP_INSTALL/bin
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
 export HADOOP_USER_NAME="pi"
-export HADOOP_CLASSPATH=\$JAVA_HOME/lib/tools.jar
+export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
 ```
 
 Finally we have to configure Hadoop. Therefor we change the configuration files as follows.
@@ -43,9 +43,8 @@ sudo nano /opt/hadoop/etc/hadoop/core-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>dfs.datanode.data.dir</name>
@@ -71,9 +70,8 @@ sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>yarn.resourcemanager.resource-tracker.address</name>
@@ -101,9 +99,8 @@ sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/mapred-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>mapreduce.job.tracker</name>
