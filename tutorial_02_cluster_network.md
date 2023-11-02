@@ -4,7 +4,7 @@ Now we will set up the network of the Pi nodes such that the nodes can access th
 
 ### Setup Pi Cluster Network
 
-First we give each cluster node a static IP. Mount bootfs on the SD card. On Ubuntu that usually works automatically by inserting the SD card into your laptop. Add an interface file into to the `interfaces.d`` folder `[...]/bootfs/cmdline.txt` and add `ip=10.0.0.<nodeID>` at the end of the line. That will change the IP of the node to a static IP such that we can access it from mac. **Make sure you choose for each node one of the** `<nodeID>` **IDs 1, 2, ... and 5.** Repeat the process for all Pi nodes and insert the SD cards into the cluster.
+First we give each cluster node a static IP. Mount bootfs on the SD card. On Ubuntu that usually works automatically by inserting the SD card into your laptop. Open the `[...]/bootfs/cmdline.txt` file and add `ip=10.0.0.<nodeID>` at the end of the line. That will change the IP of the node to a static IP such that we can access it from mac. **Make sure you choose for each node one of the** `<nodeID>` **IDs 1, 2, ... and 5.** Repeat the process for all Pi nodes and insert the SD cards into the cluster.
 
 Next we set up the network and ssh for each Pi node. First open a Terminal and login to the node with `ssh pi@node0<nodeID>`\`. The password is as previously selected `raspberry`.
 
