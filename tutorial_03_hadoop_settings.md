@@ -43,9 +43,8 @@ sudo nano /opt/hadoop/etc/hadoop/core-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>dfs.datanode.data.dir</name>
@@ -71,9 +70,8 @@ sudo nano /opt/hadoop/etc/hadoop/hdfs-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>yarn.resourcemanager.resource-tracker.address</name>
@@ -101,9 +99,8 @@ sudo nano /opt/hadoop/etc/hadoop/yarn-site.xml
 ```bash
 sudo nano /opt/hadoop/etc/hadoop/mapred-site.xml
 ```
-
+Configuration to be added:
 ```
-# Configuration to be added:
 <configuration>
     <property>
         <name>mapreduce.job.tracker</name>
