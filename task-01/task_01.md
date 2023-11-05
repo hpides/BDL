@@ -32,7 +32,7 @@ rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount
 </property>
 ```
 
-1b. If you receive later receive an `Error: Java Heap Space`, then insert the following lines into `/opt/hadoop/etc/hadoop/mapred-site.xml`:
+1b. If you later receive an `Error: Java Heap Space`, then insert the following lines into `/opt/hadoop/etc/hadoop/mapred-site.xml`:
 
 ```
 <property>
