@@ -32,6 +32,17 @@ rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount
 </property>
 ```
 
+1b. If you receive later receive an `Error: Java Heap Space`, then insert the following lines into `/opt/hadoop/etc/hadoop/mapred-site.xml`:
+
+```
+<property>
+    <name>mapreduce.map.java.opts</name>
+    <value>-Xmx4096m</value>
+</property>
+```
+This solution is outlined in the (Stack Overflow Post by User Amar)[https://stackoverflow.com/questions/15609909/error-java-heap-space]
+
+
 1. Start HDFS and YARN:
 
 ```
