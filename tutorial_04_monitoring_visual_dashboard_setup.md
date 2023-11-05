@@ -4,7 +4,7 @@ Now we add the Dashboard that is in the dashboard folder.
 
 ### Set up Prometheus as source
 
-First open a web browser and open the URL `http://node01:3000`. You should see the Grafana GUI. Afterwards we add Prometheus as our data source. On the Grafana page click on `Home` and select `Connections`.
+First open a web browser and open the URL `http://node01:3000`. You should see the Grafana GUI. Use the default user `admin` and password `admin` to log in. Afterwards we add Prometheus as our data source. On the Grafana page click on `Home` and select `Connections`.
 
 ![grafanaClickOnHome.jpg](pictures/grafanaClickOnHome.png)
 
