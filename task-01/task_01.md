@@ -47,7 +47,8 @@ This solution is outlined in the (Stack Overflow Post by User Amar)[https://stac
 
 ```
 /opt/hadoop/sbin/start-dfs.sh 
-/opt/hadoop/sbin/start-yarn.sh 
+/opt/hadoop/sbin/start-yarn.sh
+/opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
 ```
 
 If YARN has been running, restart it via:
