@@ -12,7 +12,7 @@ sudo wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
 sudo tar -xvzf spark-3.4.1-bin-hadoop3.tgz -C /opt/
 sudo rm spark-3.4.1-bin-hadoop3.tgz
 sudo mv /opt/spark-3.4.1-bin-hadoop3 /opt/spark
-sudo chown hduser:hadoop -R /opt/spark
+sudo chown pi:hadoop -R /opt/spark
 mkdir /tmp/spark-events
 ```
 
@@ -32,7 +32,7 @@ export LD_LIBRARY_PATH=\$HADOOP_HOME/lib/native:\$LD_LIBRARY_PATH
 ```
 
 ```bash
-source .environment_variables
+source ~/.environment_variables
 ```
 
 Verify the spark installation with `spark-shell --version`
