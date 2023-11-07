@@ -32,7 +32,7 @@ export LD_LIBRARY_PATH=\$HADOOP_HOME/lib/native:\$LD_LIBRARY_PATH
 ```
 
 ```bash
-source .
+source .environment_variables
 ```
 
 Verify the spark installation with `spark-shell --version`
