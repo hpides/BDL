@@ -25,10 +25,10 @@ Add the following environment variables to `~/.environment_variables` and `sourc
 
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER_HOST=node01
-export PATH=\$PATH:\$SPARK_HOME/bin
-export PATH=\$PATH:\$SPARK_HOME/sbin
-export HADOOP_CONF_DIR=\$HADOOP_HOME/etc/hadoop
-export LD_LIBRARY_PATH=\$HADOOP_HOME/lib/native:\$LD_LIBRARY_PATH
+export PATH=$PATH:$SPARK_HOME/bin
+export PATH=$PATH:$SPARK_HOME/sbin
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
 ```
 
 ```bash
