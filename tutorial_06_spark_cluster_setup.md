@@ -12,7 +12,7 @@ sudo wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
 sudo tar -xvzf spark-3.4.1-bin-hadoop3.tgz -C /opt/
 sudo rm spark-3.4.1-bin-hadoop3.tgz
 sudo mv /opt/spark-3.4.1-bin-hadoop3 /opt/spark
-sudo chown hduser:hadoop -R /opt/spark
+sudo chown pi:hadoop -R /opt/spark
 mkdir /tmp/spark-events
 ```
 
@@ -25,14 +25,14 @@ Add the following environment variables to `~/.environment_variables` and `sourc
 
 export SPARK_HOME=/opt/spark
 export SPARK_MASTER_HOST=node01
-export PATH=\$PATH:\$SPARK_HOME/bin
-export PATH=\$PATH:\$SPARK_HOME/sbin
-export HADOOP_CONF_DIR=\$HADOOP_HOME/etc/hadoop
-export LD_LIBRARY_PATH=\$HADOOP_HOME/lib/native:\$LD_LIBRARY_PATH
+export PATH=$PATH:$SPARK_HOME/bin
+export PATH=$PATH:$SPARK_HOME/sbin
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
 ```
 
 ```bash
-source .
+source ~/.environment_variables
 ```
 
 Verify the spark installation with `spark-shell --version`
