@@ -1,0 +1,10 @@
+---
+- name: Setup main nfs server
+  hosts: namenode
+  roles:
+    - nfs-main
+
+- name: Setup worker nfs server
+  hosts: datanode
+  roles:
+    - nfs-worker

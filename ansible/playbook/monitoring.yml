@@ -1,0 +1,40 @@
+---
+- name: Download node-exporter and prometheus
+  hosts: localhost
+  tasks:
+    - name: Check if node-exporter tarball exists
+      ansible.builtin.stat:
+        path: &node_exporter_path "{{ playbook_dir }}/../roles/node-exporter/files/node_exporter.tar.gz"
+      register: node_exporter_tarball
+
+    - name: Download node-exporter tarball if not present
+      ansible.builtin.get_url:
+        url: https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-arm64.tar.gz
+        dest: *node_exporter_path
+        mode: "0644"
+      when: not node_exporter_tarball.stat.exists
+
+    - name: Check if prometheus tarball exists
+      ansible.builtin.stat:
+        path: &prometheus_path "{{ playbook_dir }}/../roles/prometheus/files/prometheus.tar.gz"
+      register: prometheus_tarball
+
+    - name: Download prometheus tarball if not present
+      ansible.builtin.get_url:
+        url: https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-armv7.tar.gz
+        dest: *prometheus_path
+        mode: "0644"
+      when: not prometheus_tarball.stat.exists
+
+- name: Install and setup node-exporter
+  hosts: all
+  gather_facts: false
+  roles:
+    - node-exporter
+
+- name: Install and setup prometheus and grafana
+  hosts: namenode
+  gather_facts: false
+  roles:
+    - prometheus
+    - grafana

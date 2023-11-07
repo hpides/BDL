@@ -1,0 +1,30 @@
+<configuration>
+    <property>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>node01:8025</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.scheduler.address</name>
+        <value>node01:8035</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>node01:8050</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>node01:8088</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>1024</value>
+    </property>
+</configuration>

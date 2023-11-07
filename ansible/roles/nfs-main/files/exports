@@ -1,0 +1,4 @@
+/mnt/nfs node02(rw,sync,no_subtree_check)
+/mnt/nfs node03(rw,sync,no_subtree_check)
+/mnt/nfs node04(rw,sync,no_subtree_check)
+/mnt/nfs node05(rw,sync,no_subtree_check)

@@ -1,0 +1,27 @@
+# Show list of commands by default
+@default:
+    just --list
+
+# List all available playbooks
+@list-play:
+    ls playbook | cut -d "." -f 1 | grep -v "rollback"
+
+# Run a playbook to install java and hadoop (see `list-play` for available playbooks)
+@play FILE:
+    ANSIBLE_ROLES_PATH="./roles" poetry run ansible-playbook -i inventory.yml playbook/{{ FILE }}.yml --diff
+
+# Remove java and hadoop
+@roleback:
+    ANSIBLE_ROLES_PATH="./roles" poetry run ansible-playbook -i inventory.yml playbook/rollback.yml --diff
+
+# Run a command to activate internet sharing (first you need to get the name of the interfaces)
+linux-network-sharing INTER INTRA:
+    sudo sysctl -w net.ipv4.ip_forward=1
+    sudo iptables -t nat -A POSTROUTING -o {{ INTER }} -j MASQUERADE
+    sudo iptables -A FORWARD -i {{ INTRA }} -o {{ INTER }} -j ACCEPT
+    sudo iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+    echo "Successfully activated internet sharing"
+
+# Lint all ansible files
+@lint:
+    poetry run ansible-lint

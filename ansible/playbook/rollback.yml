@@ -1,0 +1,32 @@
+---
+- name: Rollback hadoop and java
+  hosts: all
+  tasks:
+    - name: Remove java
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /opt/java
+    - name: Remove hadoop
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /opt/hadoop
+        - /opt/hadoop_tmp
+    - name: Remove environment variables
+      ansible.builtin.file:
+        path: /home/pi/.environment_variables
+        state: absent
+    - name: Remove node-exporter, and prometheus
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /opt/node-exporter
+        - /opt/prometheus
+        - /etc/systemd/system/node-exporter.service

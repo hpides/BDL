@@ -1,0 +1,56 @@
+---
+- name: Add environment variables
+  hosts: all
+  tasks:
+    - name: Update .bashrc
+      become: true
+      ansible.builtin.blockinfile:
+        path: /home/pi/.bashrc
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - ENVIRONMENT VARIABLES"
+        insertbefore: "BOF"
+        block: |
+          # ~/.bashrc: executed by bash(1) for non-login shells.
+          # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+          # for examples
+
+          . ~/.environment_variables
+
+          # If not running interactively, don't do anything
+          case $- in
+              *i*) ;;
+                *) return;;
+          esac
+
+- name: Download Java and Hadoop tarball if not present
+  hosts: localhost
+  tasks:
+    - name: Check if Java tarball
+      ansible.builtin.stat:
+        path: &java_path "{{ playbook_dir }}/../roles/java/files/jdk.tar.gz"
+      register: java_tarball
+
+    - name: Download Java tarball if not present
+      ansible.builtin.get_url:
+        url: https://javadl.oracle.com/webapps/download/AutoDL?BundleId=248214_ce59cff5c23f4e2eaf4e778a117d4c5b
+        dest: *java_path
+        mode: "0644"
+      when: not java_tarball.stat.exists
+
+    - name: Check if Hadoop tarball
+      ansible.builtin.stat:
+        path: &hadoop_path "{{ playbook_dir }}/../roles/hadoop/files/hadoop.tar.gz"
+      register: hadoop_tarball
+
+    - name: Download Hadoop tarball if not present
+      ansible.builtin.get_url:
+        url: https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+        dest: *hadoop_path
+        mode: "0644"
+      when: not hadoop_tarball.stat.exists
+
+- name: Install Java and Hadoop
+  hosts: all
+  gather_facts: false
+  roles:
+    - java
+    - hadoop
