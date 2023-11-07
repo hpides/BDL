@@ -10,6 +10,7 @@ First we have to start the Hadoop. Start the `HDFS` using the script `/opt/hadoo
 /opt/hadoop/sbin/start-dfs.sh
 hdfs dfsadmin -report
 /opt/hadoop/sbin/start-yarn.sh
+/opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
 ```
 
 Create input and output directories in `hdfs`.
