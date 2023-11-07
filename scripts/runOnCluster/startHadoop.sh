@@ -22,11 +22,12 @@ startYARN () {
 }
 
 checkIfHistoryServerIsStopped () {
-	! jps | grep -qP HistoryServer
+	! jps | grep -qP JobHistoryServer
 }
 
 startHistoryServer () {
-	/opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+	echo "Starting historyserver"
+	mapred --daemon start historyserver
 }
 
 checkIfHadoopIsMissingDatanodes () {

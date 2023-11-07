@@ -20,7 +20,7 @@ ssh pi@node01
 ```
 hadoop com.sun.tools.javac.Main WordCount.java
 jar cf WordCount.jar WordCount*.class
-rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount.class 
+rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount.class
 ```
 
 1. As an initial setting, set the minimum amount of allocated memory per task in the YARN scheduler. Open `/opt/hadoop/etc/hadoop/yarn-site.xml` and add/change this configuration:
@@ -46,25 +46,25 @@ This solution is outlined in the (Stack Overflow Post by User Amar)[https://stac
 1. Start HDFS and YARN:
 
 ```
-/opt/hadoop/sbin/start-dfs.sh 
+/opt/hadoop/sbin/start-dfs.sh
 /opt/hadoop/sbin/start-yarn.sh
-/opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+mapred --daemon start historyserver
 ```
 
 If YARN has been running, restart it via:
 
 ```
 /opt/hadoop/sbin/stop-yarn.sh
-/opt/hadoop/sbin/start-yarn.sh 
+/opt/hadoop/sbin/start-yarn.sh
 ```
 
 ### Step 2: Data Generation
 
-1. Concatenate the supplied text file to itself 12 times to generate a 128 MB file.  
+1. Concatenate the supplied text file to itself 12 times to generate a 128 MB file.
    (This may take a minute)
 
 ```
-cp data_file data_file_copy 
+cp data_file data_file_copy
 for i in {1..12}; do cat data_file >> data_file_copy; cp data_file_copy data_file; done
 ```
 
@@ -102,8 +102,8 @@ You can track the job in the Hadoop web UI under the job URL, which is printed t
 2023-10-30 10:50:22,091 INFO mapreduce.Job:  map 0% reduce 0%
 ```
 
-The Grafana monitoring web UI is available under `node01:3000`.  
-  
+The Grafana monitoring web UI is available under `node01:3000`.
+
 For reference, this took 1m51.511s on our cluster.
 
 ### Step 4: Tuning Hadoop MapReduce
@@ -126,13 +126,13 @@ hadoop fs -D dfs.replication=1 -D dfs.block.size=33554432 -copyFromLocal data_fi
 and re-run the program:
 
 ```
-# Delete output from the previous run 
+# Delete output from the previous run
 hdfs dfs -rm -r /WordCount/output
 # Run wordcount for file with 32MB blocksize
 time hadoop jar WordCount.jar WordCount /WordCount/input/128mb_block4_rep1 /WordCount/output
 ```
 
-Report the runtimes on your cluster in a CSV file `task01_blocksizes.csv` as below: 
+Report the runtimes on your cluster in a CSV file `task01_blocksizes.csv` as below:
 
 | Number of Blocks | Runtime (s) |
 |------------------|-------------|
@@ -140,8 +140,8 @@ Report the runtimes on your cluster in a CSV file `task01_blocksizes.csv` as bel
 | 4 |  |
 | 16 |  |
 
-  
-Answer the following questions in a text file `task01_blocksizes.txt`. To support your answers, add screenshots of the Hadoop and Grafana web UIs with the names  
+
+Answer the following questions in a text file `task01_blocksizes.txt`. To support your answers, add screenshots of the Hadoop and Grafana web UIs with the names
 `task01_blocksizes_hadoop.jpg` and `task01_blocksizes_grafana.jpg`
 
 + How does the task startup time change?
@@ -152,7 +152,7 @@ Going forward, proceed with the best-performing block size configuration.
 
 #### Adjusting the Task Container Size
 
-Another performance-relevant knob is the memory allocated per task container.  
+Another performance-relevant knob is the memory allocated per task container.
  Change the YARN configuration, so we get smaller containers: Open `/opt/hadoop/etc/hadoop/yarn-site.xml` and change this configuration.
 
 ```
@@ -177,8 +177,8 @@ Report the runtimes on your cluster in a CSV `task01_containersizes.csv` as belo
 | 2048 |  |
 | ... |  |
 
-  
-Answer the following questions in a text file `task01_containersizes.txt`. To support your answers, add screenshots of the Hadoop and Grafana web UIs with the names  
+
+Answer the following questions in a text file `task01_containersizes.txt`. To support your answers, add screenshots of the Hadoop and Grafana web UIs with the names
 `task01_containersizes_hadoop.jpg` and `task01_containersizes_grafana.jpg`
 
 + How many task containers are running and on which nodes?
@@ -186,25 +186,25 @@ Answer the following questions in a text file `task01_containersizes.txt`. To su
 
 #### Bonus
 
-For the first task, you can collect one bonus point each by providing the following for a 1 GB sized text file (you may concatenate the original 128 MB file another 3 times to get to 1 GB):  
-\- Identify the best-performing overall configuration of block sizes and container sizes. Back your result with runtime results in a CSV called `task01_bonus01.csv`. Explain why this is the best configuration.  
+For the first task, you can collect one bonus point each by providing the following for a 1 GB sized text file (you may concatenate the original 128 MB file another 3 times to get to 1 GB):
+\- Identify the best-performing overall configuration of block sizes and container sizes. Back your result with runtime results in a CSV called `task01_bonus01.csv`. Explain why this is the best configuration.
 \- Identify one more performance-relenant knob from the Hadoop configuration files and provide documentation on how it affects the performance of the program in a CSV file named `task01_bonus02.csv` .
 
 #### Submission
 
-Submit the following files packaged into a zip file named `task01.zip`:  
-\- `task01_blocksizes.csv`  
-\- `task01_blocksizes.txt`  
-\- `task01_blocksizes_hadoop.jpg`  
-\- `task01_blocksizes_grafana.jpg`  
-\- `task01_containersizes.csv`  
-\- `task01_containersizes.txt`  
-\- `task01_containersizes_hadoop.jpg`  
-\- `task01_containersizes_grafana.jpg`   
-\- optional: `task01_bonus01.csv`   
+Submit the following files packaged into a zip file named `task01.zip`:
+\- `task01_blocksizes.csv`
+\- `task01_blocksizes.txt`
+\- `task01_blocksizes_hadoop.jpg`
+\- `task01_blocksizes_grafana.jpg`
+\- `task01_containersizes.csv`
+\- `task01_containersizes.txt`
+\- `task01_containersizes_hadoop.jpg`
+\- `task01_containersizes_grafana.jpg`
+\- optional: `task01_bonus01.csv`
 \- optional: `task01_bonus02.csv`
 
 #### Presentation
 
-For each group, one student representative demonstrates their Hadoop setup in action for selected configuration settings. This includes (re)running the MapReduce program and showing and interpreting the effects of the configuration via the Hadoop and Grafana web UIs.  
+For each group, one student representative demonstrates their Hadoop setup in action for selected configuration settings. This includes (re)running the MapReduce program and showing and interpreting the effects of the configuration via the Hadoop and Grafana web UIs.
 Each lab session, we rotate and document the students representing the groups so every student gets her/his turn in the course of the semester.

@@ -4,7 +4,8 @@
 # Usage: Has to be run on the master node!
 
 stopHistoryServer () {
-	/opt/hadoop/sbin/mr-jobhistory-daemon.sh stop
+	echo "Stopping historyserver"
+	mapred --daemon stop historyserver
 }
 
 stopYARN () {

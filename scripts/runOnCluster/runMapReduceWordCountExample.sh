@@ -7,7 +7,8 @@
 checkIfHadoopIsStopped () {
 	! jps | grep -qP NameNode ||
 	! jps | grep -qP SecondaryNameNode ||
-	! jps | grep -qP ResourceManager
+	! jps | grep -qP ResourceManager ||
+	! jps | grep -qP JobHistoryServer
 }
 
 startHadoop () {

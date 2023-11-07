@@ -10,7 +10,7 @@ First we have to start the Hadoop. Start the `HDFS` using the script `/opt/hadoo
 /opt/hadoop/sbin/start-dfs.sh
 hdfs dfsadmin -report
 /opt/hadoop/sbin/start-yarn.sh
-/opt/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+mapred --daemon start historyserver
 ```
 
 Create input and output directories in `hdfs`.
@@ -124,6 +124,7 @@ hdfs dfs -cat /WordCount/output/part-r-00000
 To stop Hadoop first stop the resource manager and then stop the `hdfs`.
 
 ```bash
+mapred --daemon stop historyserver
 /opt/hadoop/sbin/stop-yarn.sh
 /opt/hadoop/sbin/stop-dfs.sh
 ```
