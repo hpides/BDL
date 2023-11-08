@@ -6,16 +6,16 @@ You have already done the *Setup Hadoop* tutorial and have a cluster of five nod
 
 ### PySpark Installation
 
-First we add Spark to the Python path. Add the following line to the `.environment_variables` file and `source .` the changes.
+First we add Spark to the Python path. Add the following line to the `~/.environment_variables` file and `source ~/.environment_variables` the changes.
 
-.environment_variables:
+~/.environment_variables:
 
 ```bash
 export PYTHONPATH=$(ZIPS=("$SPARK_HOME"/python/lib/*.zip); IFS=:; echo "${ZIPS[*]}"):$PYTHONPATH
 ```
 
 ```bash
-source .
+source ~/.environment_variables
 ```
 
 Next we install Python, Pip and Venv with the following commands.
