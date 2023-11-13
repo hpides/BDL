@@ -1,0 +1,27 @@
+---
+- name: Update hadoop config
+  hosts: all
+  tasks:
+    - name: Copy hadoop config
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../roles/hadoop/files/{{ item }}"
+        dest: "/opt/hadoop/etc/hadoop/{{ item }}"
+        owner: pi
+        group: hadoop
+        mode: "0644"
+      with_items:
+        - "core-site.xml"
+        - "hdfs-site.xml"
+        - "yarn-site.xml"
+
+    - name: Create mapred config
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../roles/hadoop/templates/mapred-site.xml.j2"
+        dest: "/opt/hadoop/etc/hadoop/mapred-site.xml"
+        owner: pi
+        group: hadoop
+        mode: "0644"
+
+    - name: Start mapreduce history server
+      ansible.builtin.command: "mapred --daemon start historyserver"
+      ignore_errors: true

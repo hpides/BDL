@@ -1,0 +1,26 @@
+---
+- name: Create nfs folder
+  become: true
+  ansible.builtin.file:
+    path: /mnt/nfs
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Mount nfs to master
+  become: true
+  ansible.builtin.mount:
+    path: /mnt/nfs
+    src: node01:/mnt/nfs
+    fstype: nfs
+    opts: defaults
+    state: mounted
+
+- name: Add to rc local
+  become: true
+  ansible.builtin.blockinfile:
+    path: /etc/rc.local
+    block: |
+      sudo /etc/init.d/rpcbind restart
+      sudo /etc/init.d/nfs-kernel-server restart

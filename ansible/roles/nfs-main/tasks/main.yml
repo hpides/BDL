@@ -1,0 +1,55 @@
+---
+- name: Install nfs-kernel-server
+  become: true
+  ansible.builtin.apt:
+    name: nfs-kernel-server
+    state: present
+    update_cache: yes
+
+- name: Create NFS folder
+  become: true
+  ansible.builtin.file:
+    path: /mnt/nfs
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Create NFS exports file
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../roles/nfs-main/files/exports"
+    dest: /etc/exports
+    owner: pi
+    group: hadoop
+    mode: "0644"
+
+- name: Restart rpcbind service
+  become: true
+  ansible.builtin.service:
+    name: rpcbind
+    state: restarted
+    enabled: yes
+
+- name: Restart NFS service
+  become: true
+  ansible.builtin.service:
+    name: nfs-kernel-server
+    state: restarted
+    enabled: yes
+
+- name: Check if NFS is running
+  ansible.builtin.wait_for:
+    port: 2049
+    delay: 5
+    timeout: 10
+    state: started
+    msg: NFS is not running
+
+- name: Add to rc local
+  become: true
+  ansible.builtin.blockinfile:
+    path: /etc/rc.local
+    block: |
+      sudo /etc/init.d/rpcbind restart
+      sudo /etc/init.d/nfs-kernel-server restart

@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "big-data-lab"
+version = "0.1.0"
+description = ""
+authors = ["Felix Hoffmann <felix.hoffmann@student.hpi.uni-potsdam.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ansible = "^8.5.0"
+ansible-lint = { version = "^6.21.1", markers = "platform_system != 'Windows'" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,31 @@
+---
+- name: Check if JDK is already present
+  ansible.builtin.stat:
+    path: &download_path /tmp/jdk-8u371.tar.gz
+  register: jdk_check
+
+- name: Create /opt/java directory if not present
+  become: true
+  ansible.builtin.file:
+    path: /opt/java
+    state: directory
+    owner: pi
+    mode: "0755"
+  when: not jdk_check.stat.exists
+
+- name: Extract the java tarball
+  ansible.builtin.unarchive:
+    src: "{{ playbook_dir }}/../roles/java/files/jdk.tar.gz"
+    dest: /tmp/
+    owner: pi
+    mode: "0755"
+  when: not jdk_check.stat.exists
+
+- name: Set JAVA_HOME and PATH in ~/.environment_variables
+  ansible.builtin.blockinfile:
+    path: /home/pi/.environment_variables
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - JAVA"
+    block: |
+      export JAVA_HOME=/opt/java/jdk1.8.0_371
+      export PATH=$PATH:$JAVA_HOME/bin
