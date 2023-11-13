@@ -43,8 +43,8 @@ setInterfaceNames () {
 	if checkIfThereAreTwoArguments $@; then
 		setCLUSTERCONNECTION $1
 		setINTERNETCONNECTION $2
-else
-setInterfaceNamesAutomatically
+	else
+		setInterfaceNamesAutomatically
 	fi
 }
 
