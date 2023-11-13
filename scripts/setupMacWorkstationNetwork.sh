@@ -5,6 +5,13 @@
 # Example:
 #     ./setupWorkstationNetwork.sh eth0 eth1
 
+checkIfSshCopyIdIsInstalled () {
+	if ! command -v ssh-copy-id &> /dev/null
+	then
+	    echo "Error: ssh-copy-id is not installed. Please install it (e.g. with brew) before running this script." >&2
+	    exit 1
+	fi
+}
 
 checkIfThereAreArguments () {
 	! [ "$#" -eq 0 ]
@@ -36,8 +43,8 @@ setInterfaceNames () {
 	if checkIfThereAreTwoArguments $@; then
 		setCLUSTERCONNECTION $1
 		setINTERNETCONNECTION $2
-	else
-		setInterfaceNamesAutomatically
+else
+setInterfaceNamesAutomatically
 	fi
 }
 
@@ -108,7 +115,7 @@ checkIfOldNodeKeyIsInKnownHosts () {
 }
 
 checkIfWeCanPingPi () {
-	ping -c 1 -w 1 node0$1 | grep -q "1 received"
+	ping -c 1 -W 1 node0$1 | grep -q "1 packets received"
 }
 
 removeOldNodeKeyFromKnownHosts () {
@@ -163,6 +170,7 @@ printSettings () {
 
 main () {
     setInterfaceNames $@
+	checkIfSshCopyIdIsInstalled
 	setupStaticIp
     getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
@@ -172,4 +180,4 @@ main () {
     printSettings
 }
 
-main
+main $@
