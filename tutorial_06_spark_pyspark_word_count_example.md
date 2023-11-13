@@ -10,7 +10,7 @@ After opening the Jupyter Ui create a new Notebook and add the following lines.
 
 ```bash
 # Import SparkSession
-from pyspark.sql import SparkSession, Row
+from pyspark.sql import SparkSession
 
 # Create SparkSession
 spark = SparkSession.builder \
@@ -18,7 +18,7 @@ spark = SparkSession.builder \
     .appName("WordCount") \
     .getOrCreate()
 
-sc = spark.SparkContext()
+sc = spark.sparkContext
 
 # Read the input file and Calculating words count
 text_file = sc.textFile("/WordCount/input/file01")

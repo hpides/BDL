@@ -16,7 +16,7 @@ sudo chown pi:hadoop -R /opt/spark
 mkdir /tmp/spark-events
 ```
 
-Add the following environment variables to `~/.environment_variables` and `source .` afterwards.
+Add the following environment variables to `~/.environment_variables` and `source ~/.environment_variables` afterwards.
 
 .environment_variables:
 
@@ -33,6 +33,18 @@ export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
 
 ```bash
 source ~/.environment_variables
+```
+
+Then, you need to add an environment variable to Spark by typing
+
+```bash
+sudo vi /opt/spark/sbin/spark-config.sh
+```
+
+and adding
+
+```bash
+export JAVA_HOME=/opt/java/jdk1.8.0_371
 ```
 
 Verify the spark installation with `spark-shell --version`
@@ -65,6 +77,18 @@ spark.executor.cores 4
 spark.eventLog.enabled true
 spark.eventLog.dir file:///tmp/spark-events
 spark.history.fs.logDirectory file:///tmp/spark-events
+```
+
+On the Namenode (node01) only, create a `workers` file in the `/opt/spark/conf/` directory and add all nodes, one per line.
+
+workers:
+
+```
+node01
+node02
+node03
+node04
+node05
 ```
 
 Start the Spark cluster by executing the following commands only on the head node.
