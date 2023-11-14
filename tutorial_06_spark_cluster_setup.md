@@ -14,6 +14,7 @@ sudo rm spark-3.4.1-bin-hadoop3.tgz
 sudo mv /opt/spark-3.4.1-bin-hadoop3 /opt/spark
 sudo chown pi:hadoop -R /opt/spark
 mkdir /tmp/spark-events
+sudo chown pi:hadoop -R /tmp/spark-events
 ```
 
 Add the following environment variables to `~/.environment_variables` and `source ~/.environment_variables` afterwards.
