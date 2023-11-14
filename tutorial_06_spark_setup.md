@@ -100,9 +100,9 @@ Start the Spark cluster by executing the following commands only on the head nod
 /opt/spark/sbin/start-all.sh
 ```
 
-You can access the Web UI via http://node01:8080 and the Histery Server UI via http://node01:18080
+You can access the web UIs of Spark via http://node01:8080 and the history server via http://node01:18080, respectively.
 
-### Execute Word Count Example
+### Word Count Example
 
 Type `spark-shell` and execute:
 
