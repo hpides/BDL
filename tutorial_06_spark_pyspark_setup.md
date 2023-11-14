@@ -38,7 +38,7 @@ Follow the instructions to access the Jupyter Notebook Web UI.
 
 ### Word Count Example
 
-After opening the Jupyter Ui create a new Notebook and add the following lines.
+After opening the Jupyter web UI, create a new notebook and add the following lines.
 
 ```bash
 # Import SparkSession
