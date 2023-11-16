@@ -43,7 +43,7 @@ Report the results of the dataframe in 3 as below:
 1. Write and run a query to list all users in a specific location.
 2. Write and run a query to list the 100 users with the highest reputation.
 3. Write and run a query to list the 100 users that upvote the least relative to their downvotes.
-4. Import the stackoverflow.com-Posts dataset. Write and run a query to list the 100 users with the highest average answer score, excluding community wiki and closed posts.
+4. Import the stackoverflow.com-Posts dataset. Write and run a query to list the 100 users with the highest average answer score, excluding community wiki and closed posts. Note that the posts dataset is ~20 GB packed and ~100GB unpacked, and make sure your machine has enough disk space to store it locally before you move it to HDFS.
 5. Reformat the datasets in Parquet and rerun the last join query.
 
 Report the runtimes of your queries in `task02_query_runtimes.csv` as below:
