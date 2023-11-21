@@ -20,7 +20,7 @@ source ~/.environment_variables
 
 ```bash
 #Copy the data to the cluster.
-scp ./data_file pi@node01:~
+scp ./data_file.txt pi@node01:~
 ```
 
 Next we install Python, Pip and Venv with the following commands.
