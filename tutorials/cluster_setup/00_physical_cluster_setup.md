@@ -19,4 +19,4 @@ This tutorial describes how to set up the physical part of our Raspberry Pi Clus
 
 Connect the USB C to USB 2.0 cables into the Anker power supply and the Ethernet cables into the switch and the Pis. Lastly connect the USB Ethernet Dongle to your laptop and connect an Ethernet cable to the Dongle and the Pi switch. Power on the Switch and Anker power supply. The cluster should look similar to the following image.
 
-![cluster.jpg](pictures/cluster.jpg)
+![cluster.jpg](../../pictures/cluster.jpg)
