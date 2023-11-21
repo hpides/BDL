@@ -47,14 +47,15 @@ Follow the instructions to access the Jupyter Notebook Web UI.
 After opening the Jupyter web UI, create a new notebook and add the following cells.
 
 ```bash
-# Import SparkSession
+# Import SparkSession and other libraries
+import subprocess
+import os
 from pyspark.sql import SparkSession
+```
 
-# Create SparkSession
-spark = SparkSession.builder \
-    .master("spark://node01:7077") \
-    .appName("WordCount") \
-    .getOrCreate()
+```bash 
+# Check for the spark-events folder
+os.makedirs("/tmp/spark-events", exist_ok=True)
 ```
 
 ```bash
@@ -73,17 +74,30 @@ f.close()
 ```
 
 ```bash
+# Create SparkSession
+spark = SparkSession.builder \
+    .master("spark://node01:7077") \
+    .appName("WordCount") \
+    .getOrCreate()
+```
+```bash
 sc = spark.sparkContext
+```
 
+```bash
 # Upload the data to HDFS
-sc.parallelize(range(10)).saveAsTextFile("/home/pi/data_file_large.txt")
+subprocess.call(['hadoop fs -copyFromLocal -f /home/pi/data_file_large.txt hdfs://node01:9000/WordCount/input/data_file_large.txt'], shell=True)
+```
 
-# Read the input file and Calculating words count
+```bash
+# Read the input file and calculate word count
 text_file = sc.textFile("/WordCount/input/data_file_large.txt")
 counts = text_file.flatMap(lambda line: line.split(" ")) \
     .map(lambda word: (word, 1)) \
     .reduceByKey(lambda x, y: x + y)
+```
 
+```bash
 # Collect and print the word count output
 counts.collect()
 ```
