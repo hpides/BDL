@@ -47,6 +47,17 @@ Follow the instructions to access the Jupyter Notebook Web UI.
 After opening the Jupyter web UI, create a new notebook and add the following cells.
 
 ```bash
+# Import SparkSession
+from pyspark.sql import SparkSession
+
+# Create SparkSession
+spark = SparkSession.builder \
+    .master("spark://node01:7077") \
+    .appName("WordCount") \
+    .getOrCreate()
+```
+
+```bash
 # Generate data  
 with open("/home/pi/data_file.txt", "r") as f:
     lines = f.readlines()
@@ -62,15 +73,6 @@ f.close()
 ```
 
 ```bash
-# Import SparkSession
-from pyspark.sql import SparkSession
-
-# Create SparkSession
-spark = SparkSession.builder \
-    .master("spark://node01:7077") \
-    .appName("WordCount") \
-    .getOrCreate()
-
 sc = spark.sparkContext
 
 # Upload the data to HDFS
