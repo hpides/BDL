@@ -39,7 +39,7 @@ source ~/.environment_variables
 Then, you need to add an environment variable to Spark by typing
 
 ```bash
-sudo vi /opt/spark/sbin/spark-config.sh
+sudo nano /opt/spark/sbin/spark-config.sh
 ```
 
 and adding
@@ -48,10 +48,11 @@ and adding
 export JAVA_HOME=/opt/java/jdk1.8.0_371
 ```
 
-Verify the spark installation with `spark-shell --version`
+Verify the Spark installation with `spark-shell --version`
 
 ```bash
-hduser@node01:/opt $ spark-shell --version
+spark-shell --version
+
 Welcome to
       ____              __
      / __/__  ___ _____/ /__
@@ -85,7 +86,6 @@ On the Namenode (node01) only, create a `workers` file in the `/opt/spark/conf/`
 workers:
 
 ```
-node01
 node02
 node03
 node04
@@ -106,7 +106,7 @@ You can access the web UIs of Spark via http://node01:8080 and the history serve
 
 Type `spark-shell` and execute:
 
-```
+```bash
 val textFile = sc.textFile("hdfs://node01:9000/WordCount/input/*")
 val counts = textFile.flatMap(line => line.split(" "))
                  .map(word => (word, 1))
