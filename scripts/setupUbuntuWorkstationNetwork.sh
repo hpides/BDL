@@ -12,6 +12,20 @@
 # ifconfig -a
 
 
+checkIfNetstatIsMissing () {
+	! command -v netstat &> /dev/null
+}
+
+aptGetNetTools () {
+	sudo apt install net-tools
+}
+
+installNetstat () {
+	if checkIfNetstatIsMissing; then
+		aptGetNetTools
+	fi
+}
+
 checkIfThereAreArguments () {
 	! [ "$#" -eq 0 ]
 }
@@ -159,6 +173,7 @@ printSettings () {
 }
 
 main () {
+	installNetstat
 	setInterfaceNames $@
 	setupStaticIp
 	getInternetIntoThePis
