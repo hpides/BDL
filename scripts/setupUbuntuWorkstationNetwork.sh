@@ -61,10 +61,24 @@ setInterfaceNames () {
 	fi
 }
 
+checkIfPiClusterConnectionExists () {
+	nmcli con show | grep -q Pi_Cluster
+}
+
+deletePiClusterConnection () {
+	sudo nmcli con del "Pi_Cluster"
+}
+
+createPiClusterConnection () {
+	sudo nmcli con add type ethernet con-name "Pi_Cluster" ifname $CLUSTERCONNECTION ipv4.addresses 10.0.0.10/24 ipv4.method manual
+}
+
 setupStaticIp () {
 	echo "Setting up static IP"
-	sudo nmcli con del "Pi_Cluster"
-	sudo nmcli con add type ethernet con-name "Pi_Cluster" ifname $CLUSTERCONNECTION ipv4.addresses 10.0.0.10/24 ipv4.method manual
+	if checkIfPiClusterConnectionExists; then
+		deletePiClusterConnection
+	fi
+	createPiClusterConnection
 }
 
 enablePacketForwarding () {
