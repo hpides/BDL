@@ -23,7 +23,7 @@ copySetupFilesToCluster () {
 runSetupScriptsInParallel () {
 	for keyItr in {1..5}; do
 		NODE=node0$keyItr
-		piSSH ./setupNFS.sh
+		piSSH ./setupNFS.sh 1> /dev/null &
 	done
 }
 
