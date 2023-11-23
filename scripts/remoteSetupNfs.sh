@@ -1,8 +1,8 @@
 #! /bin/bash
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -16,7 +16,7 @@ piSSH () {
 copySetupFilesToCluster () {
 	for keyItr in {1..5}; do
 		NODE=node0$keyItr
-		piSCP $SCRIPT_DIR/runOnCluster/setupNFS.sh \~
+		piSCP $PROJECT_DIR/scripts/runOnCluster/setupNFS.sh \~
 	done
 }
 
@@ -32,7 +32,7 @@ waitForAllNodesToFinish () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	copySetupFilesToCluster
 	runSetupScriptsInParallel
 	waitForAllNodesToFinish

@@ -1,0 +1,146 @@
+---
+- name: Create Hadoop group
+  become: true
+  ansible.builtin.group:
+    name: hadoop
+    state: present
+
+- name: Add user pi to Hadoop group
+  become: true
+  ansible.builtin.user:
+    name: pi
+    groups: hadoop
+    append: true
+    state: present
+
+- name: Create Hadoop folder structure
+  become: true
+  ansible.builtin.file:
+    path: "/opt/hadoop_tmp/hdfs"
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Create Hadoop namenode folder
+  become: true
+  ansible.builtin.file:
+    path: /opt/hadoop_tmp/hdfs/namenode
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+  when: inventory_hostname == "node01"
+
+- name: Create Hadoop datanode folder
+  become: true
+  ansible.builtin.file:
+    path: /opt/hadoop_tmp/hdfs/datanode
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+  when: inventory_hostname != "node01"
+
+- name: Create Hadoop folder
+  become: true
+  ansible.builtin.file:
+    path: /opt/hadoop
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Copy Hadoop from host
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../roles/hadoop/files/hadoop.tar.gz"
+    dest: &download_path /tmp/hadoop.tar.gz
+    owner: pi
+    group: hadoop
+    mode: "0644"
+
+- name: Check if Hadoop is already present
+  ansible.builtin.stat:
+    path: /tmp/hadoop-3.3.6/
+  register: hadoop_check
+
+- name: Extract Hadoop
+  become: true
+  ansible.builtin.unarchive:
+    src: *download_path
+    dest: /tmp/
+    remote_src: true
+    owner: pi
+    group: hadoop
+    mode: "0755"
+  when: not hadoop_check.stat.exists
+
+- name: Move Hadoop to /opt
+  become: true
+  ansible.builtin.copy:
+    src: /tmp/hadoop-3.3.6/
+    dest: /opt/hadoop
+    remote_src: true
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Create Hadoop folder
+  ansible.builtin.file:
+    path: /opt/hadoop/etc/hadoop
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Copy hadoop configuration
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /opt/hadoop/etc/hadoop/
+    owner: pi
+    group: hadoop
+    mode: "0644"
+  loop:
+    - "{{ playbook_dir }}/../roles/hadoop/files/core-site.xml"
+    - "{{ playbook_dir }}/../roles/hadoop/files/hdfs-site.xml"
+    - "{{ playbook_dir }}/../roles/hadoop/files/yarn-site.xml"
+
+- name: Create mapred config
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/../roles/hadoop/templates/mapred-site.xml.j2"
+    dest: "/opt/hadoop/etc/hadoop/mapred-site.xml"
+    owner: pi
+    group: hadoop
+    mode: "0644"
+
+- name: Copy workers file (only for node01)
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../roles/hadoop/files/workers"
+    dest: /opt/hadoop/etc/hadoop/
+    owner: pi
+    group: hadoop
+    mode: "0644"
+  when: inventory_hostname == "node01"
+
+- name: Edit hadoop-env.sh
+  ansible.builtin.blockinfile:
+    path: /opt/hadoop/etc/hadoop/hadoop-env.sh
+    create: true
+    block: |
+      export JAVA_HOME=/opt/java/jdk1.8.0_371
+
+- name: Add Hadoop variables to /home/pi/.environment_variables
+  ansible.builtin.blockinfile:
+    path: /home/pi/.environment_variables
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - HADOOP"
+    block: |
+      export HADOOP_HOME=/opt/hadoop
+      export HADOOP_INSTALL=$HADOOP_HOME
+      export YARN_HOME=$HADOOP_HOME
+      export PATH=$PATH:$HADOOP_INSTALL/bin
+      export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+      export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+      export HADOOP_USER_NAME="pi"
+      export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar

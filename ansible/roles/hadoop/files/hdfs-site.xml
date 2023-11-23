@@ -1,0 +1,20 @@
+<configuration>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>[DISK]file:///opt/hadoop_tmp/hdfs/datanode,</value>
+        <final>true</final>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/opt/hadoop_tmp/hdfs/namenode</value>
+        <final>true</final>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>node01:50070</value>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>5</value>
+    </property>
+</configuration>

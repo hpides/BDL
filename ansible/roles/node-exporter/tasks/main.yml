@@ -1,0 +1,63 @@
+---
+- name: Create /opt/node-exporter folder
+  become: true
+  ansible.builtin.file:
+    path: "/opt/node-exporter"
+    state: directory
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Check if node-exporter is already present
+  ansible.builtin.stat:
+    path: /tmp/node_exporter-1.0.1.linux-arm64
+  register: node_exporter_check
+
+- name: Extract node-exporter
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ playbook_dir }}/../roles/node-exporter/files/node_exporter.tar.gz"
+    dest: /tmp/
+    owner: pi
+    group: hadoop
+    mode: "0755"
+  when: not node_exporter_check.stat.exists
+
+- name: Rename node-exporter binary
+  ansible.builtin.copy:
+    src: &binary_path /tmp/node_exporter-1.0.1.linux-arm64/node_exporter
+    dest: /opt/node-exporter/
+    remote_src: true
+    owner: pi
+    group: hadoop
+    mode: "0755"
+
+- name: Remove node-exporter binary
+  become: true
+  ansible.builtin.file:
+    path: *binary_path
+    state: absent
+
+- name: Copy node-exporter service file
+  become: true
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../roles/node-exporter/files/node-exporter.service"
+    dest: /etc/systemd/system/node-exporter.service
+    owner: pi
+    group: hadoop
+    mode: "0644"
+
+- name: Start node-exporter service
+  become: true
+  ansible.builtin.service:
+    name: node-exporter
+    state: started
+    enabled: true
+
+- name: Check if node-exporter is running
+  become: true
+  ansible.builtin.wait_for:
+    port: 9100
+    delay: 5
+    timeout: 10
+    state: started

@@ -1,8 +1,8 @@
 #! /bin/bash
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -14,7 +14,7 @@ piSSH () {
 }
 
 copySetupScriptToClusterNode () {
-	piSCP $SCRIPT_DIR/runOnCluster/setupPiNetwork.sh \~
+	piSCP $PROJECT_DIR/scripts/runOnCluster/setupPiNetwork.sh \~
 }
 
 runSetupScriptOnClusterNode () {
@@ -22,7 +22,7 @@ runSetupScriptOnClusterNode () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	for nodeItr in {1..5}; do
 		NODE=node0$nodeItr
 		echo "***********************************"

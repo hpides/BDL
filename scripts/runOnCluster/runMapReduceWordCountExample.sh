@@ -24,7 +24,7 @@ checkIfOutputDirectoryInHDFSExists () {
 }
 
 removeOutputDirectoryInHDFS () {
-	hdfs dfs -rm -r /WordCount/output
+	hadoop fs -rm -r /WordCount/output
 }
 
 prepareHDFS () {
@@ -48,7 +48,7 @@ A human is running The cat is blue A dog is blue A mouse is sleeping A human is 
 A cat is going to sleep The dog is red A mouse is blue A human is going to sleep
 A cat is running The dog is sleeping A mouse is blue A human is running The cat is blue" > file01
 
-	hdfs dfs -copyFromLocal -f file* /WordCount/input
+	hadoop fs -copyFromLocal -f file* /WordCount/input
 	rm file*
 }
 
@@ -72,7 +72,7 @@ printResult () {
 	echo "***********************************"
 	echo "* The Word Count Result"
 	echo "***********************************"
-	hdfs dfs -cat /WordCount/output/part-r-00000
+	hadoop fs -cat /WordCount/output/part-r-00000
 }
 
 main () {

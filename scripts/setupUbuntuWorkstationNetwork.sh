@@ -6,11 +6,25 @@
 # internet connection.
 #
 # Example:
-#     ./setupWorkstationNetwork.sh eth0 eth1
+#	 ./setupWorkstationNetwork.sh eth0 eth1
 #
 # Get the Ethernet devices with
 # ifconfig -a
 
+
+checkIfNetstatIsMissing () {
+	! command -v netstat &> /dev/null
+}
+
+aptGetNetTools () {
+	sudo apt install net-tools
+}
+
+installNetstat () {
+	if checkIfNetstatIsMissing; then
+		aptGetNetTools
+	fi
+}
 
 checkIfThereAreArguments () {
 	! [ "$#" -eq 0 ]
@@ -47,10 +61,24 @@ setInterfaceNames () {
 	fi
 }
 
+checkIfPiClusterConnectionExists () {
+	nmcli con show | grep -q Pi_Cluster
+}
+
+deletePiClusterConnection () {
+	sudo nmcli con del "Pi_Cluster"
+}
+
+createPiClusterConnection () {
+	sudo nmcli con add type ethernet con-name "Pi_Cluster" ifname $CLUSTERCONNECTION ipv4.addresses 10.0.0.10/24 ipv4.method manual
+}
+
 setupStaticIp () {
 	echo "Setting up static IP"
-	sudo nmcli con del "Pi_Cluster"
-	sudo nmcli con add type ethernet con-name "Pi_Cluster" ifname $CLUSTERCONNECTION ipv4.addresses 10.0.0.10/24 ipv4.method manual
+	if checkIfPiClusterConnectionExists; then
+		deletePiClusterConnection
+	fi
+	createPiClusterConnection
 }
 
 enablePacketForwarding () {
@@ -81,6 +109,12 @@ writeHostnamesIntoHostsFile () {
 	echo "# Pi Cluster" | sudo tee -a /etc/hosts
 	for hostItr in {1..5}; do
 		echo "10.0.0.$hostItr node0$hostItr" | sudo tee -a /etc/hosts
+	done
+}
+
+removeOldSSHKeys () {
+	for keyItr in {1..5}; do
+		ssh-keygen -f ~/.ssh/known_hosts -R node0$keyItr
 	done
 }
 
@@ -159,12 +193,14 @@ printSettings () {
 }
 
 main () {
+	installNetstat
 	setInterfaceNames $@
 	setupStaticIp
 	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
 	fi
+	removeOldSSHKeys
 	setupPasswordlessSSH
 	printSettings
 }

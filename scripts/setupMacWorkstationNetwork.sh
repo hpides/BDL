@@ -1,16 +1,29 @@
-# Usage: Either write the Ethernet interfaces here or provide them as arguments.
-# When the internet he first argument is the Pi cluster connection & the second argument is the
+# Usage: Either let the script try to identify the interfaces automatically or provide
+# them as script inputs.
+# When not providing arguments the interfaces are selected automatically. Make sure
+# that you keep the original name of the USB LAN interface, i.e. 'USB 10/100/1000 LAN'.
+#
+# Example:
+#	 ./setupWorkstationNetwork.sh
+#
+# When the first argument eth0 is the Pi cluster connection & the second argument eth1 is the
 # internet connection.
 #
 # Example:
-#     ./setupWorkstationNetwork.sh eth0 eth1
+#	 ./setupWorkstationNetwork.sh eth0 eth1
 
-checkIfSshCopyIdIsInstalled () {
-	if ! command -v ssh-copy-id &> /dev/null
-	then
-	    echo "Error: ssh-copy-id is not installed. Please install it (e.g. with brew) before running this script." >&2
-	    exit 1
-	fi
+checkIfSSHCopyIdIsMissing () {
+	! command -v ssh-copy-id &> /dev/null
+}
+
+brewInstallSSHCopyId () {
+  brew install ssh-copy-id
+}
+
+installSSHCopyId () {
+  if checkIfSSHCopyIdIsMissing; then
+    brewInstallSSHCopyId
+  fi
 }
 
 checkIfThereAreArguments () {
@@ -56,25 +69,25 @@ setupStaticIp () {
 
 enablePackageForwarding () {
 	echo "Enabling packet forwarding"
-    sudo sysctl -w net.inet.ip.forwarding=1
-    sudo sysctl -w net.inet6.ip6.forwarding=1
+	sudo sysctl -w net.inet.ip.forwarding=1
+	sudo sysctl -w net.inet6.ip6.forwarding=1
 }
 
 createANatRulesFileForPfctl () {
-    echo "scrub on $INTERNETCONNECTION reassemble tcp no-df random-id" > nat-rules
-    echo "nat on $INTERNETCONNECTION from 10.0.0.0/24 to any -> $INTERNETCONNECTION" >> nat-rules
+	echo "scrub on $INTERNETCONNECTION reassemble tcp no-df random-id" > nat-rules
+	echo "nat on $INTERNETCONNECTION from 10.0.0.0/24 to any -> $INTERNETCONNECTION" >> nat-rules
 }
 
 enableNewNatRules () {
-    sudo pfctl -e -f ./nat-rules
+	sudo pfctl -e -f ./nat-rules
 	wait
 	rm ./nat-rules
 }
 
-setupNat() {
+setupNat () {
 	echo "Setting up NAT"
-    createANatRulesFileForPfctl
-    enableNewNatRules
+	createANatRulesFileForPfctl
+	enableNewNatRules
 }
 
 getInternetIntoThePis () {
@@ -115,7 +128,7 @@ checkIfOldNodeKeyIsInKnownHosts () {
 }
 
 checkIfWeCanPingPi () {
-	ping -c 1 -W 1 node0$1 | grep -q "1 packets received"
+	ping -c 1 -W 1 node0$1 | grep -q "1.*received"
 }
 
 removeOldNodeKeyFromKnownHosts () {
@@ -169,15 +182,15 @@ printSettings () {
 }
 
 main () {
-    setInterfaceNames $@
-	checkIfSshCopyIdIsInstalled
+  installSSHCopyId
+	setInterfaceName $@
 	setupStaticIp
-    getInternetIntoThePis
+	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
 	fi
 	setupPasswordlessSSH
-    printSettings
+	printSettings
 }
 
 main $@

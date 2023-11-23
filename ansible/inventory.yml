@@ -1,0 +1,8 @@
+namenode:
+  hosts:
+    node01:
+      ansible_user: &user pi
+datanode:
+  hosts:
+    node0[2:5]:
+      ansible_user: *user
