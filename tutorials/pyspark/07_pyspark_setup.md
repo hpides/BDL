@@ -91,7 +91,7 @@ subprocess.call(['hadoop fs -copyFromLocal -f /home/pi/data_file_large.txt /Word
 
 ```bash
 # Read the input file and calculate word count
-text_file = sc.textFile("/WordCount/input/data_file_large.txt")
+text_file = sc.textFile("hdfs://node01:9000/WordCount/input/data_file_large.txt")
 counts = text_file.flatMap(lambda line: line.split(" ")) \
     .map(lambda word: (word, 1)) \
     .reduceByKey(lambda x, y: x + y)
