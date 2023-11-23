@@ -11,6 +11,9 @@
 #
 # Example:
 #	 ./setupWorkstationNetwork.sh eth0 eth1
+#
+# Get the Ethernet devices with
+# ifconfig -a
 
 checkIfSSHCopyIdIsMissing () {
 	! command -v ssh-copy-id &> /dev/null
