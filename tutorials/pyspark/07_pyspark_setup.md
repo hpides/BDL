@@ -53,13 +53,13 @@ import os
 from pyspark.sql import SparkSession
 ```
 
-```bash 
+```bash
 # Check for the spark-events folder
 os.makedirs("/tmp/spark-events", exist_ok=True)
 ```
 
 ```bash
-# Generate data  
+# Generate data
 with open("/home/pi/data_file.txt", "r") as f:
     lines = f.readlines()
     for _ in range(12):
@@ -86,7 +86,7 @@ sc = spark.sparkContext
 
 ```bash
 # Upload the data to HDFS
-subprocess.call(['hadoop fs -copyFromLocal -f /home/pi/data_file_large.txt hdfs://node01:9000/WordCount/input/data_file_large.txt'], shell=True)
+subprocess.call(['hadoop fs -copyFromLocal -f /home/pi/data_file_large.txt /WordCount/input/data_file_large.txt'], shell=True)
 ```
 
 ```bash
