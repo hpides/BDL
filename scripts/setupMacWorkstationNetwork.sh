@@ -1,10 +1,30 @@
-# Usage: Either write the Ethernet interfaces here or provide them as arguments.
-# When the internet he first argument is the Pi cluster connection & the second argument is the
+# Usage: Either let the script try to identify the interfaces automatically or provide
+# them as script inputs.
+# When not providing arguments the interfaces are selected automatically. Make sure
+# that you keep the original name of the USB LAN interface, i.e. 'USB 10/100/1000 LAN'.
+#
+# Example:
+#	 ./setupWorkstationNetwork.sh
+#
+# When the first argument eth0 is the Pi cluster connection & the second argument eth1 is the
 # internet connection.
 #
 # Example:
 #	 ./setupWorkstationNetwork.sh eth0 eth1
 
+checkIfSSHCopyIdIsMissing () {
+	! command -v ssh-copy-id &> /dev/null
+}
+
+brewInstallSSHCopyId () {
+  brew install ssh-copy-id
+}
+
+installSSHCopyId () {
+  if checkIfSSHCopyIdIsMissing; then
+    brewInstallSSHCopyId
+  fi
+}
 
 checkIfThereAreArguments () {
 	! [ "$#" -eq 0 ]
@@ -64,7 +84,7 @@ enableNewNatRules () {
 	rm ./nat-rules
 }
 
-setupNat() {
+setupNat () {
 	echo "Setting up NAT"
 	createANatRulesFileForPfctl
 	enableNewNatRules
@@ -108,7 +128,7 @@ checkIfOldNodeKeyIsInKnownHosts () {
 }
 
 checkIfWeCanPingPi () {
-	ping -c 1 -w 1 node0$1 | grep -q "1 received"
+	ping -c 1 -W 1 node0$1 | grep -q "1.*received"
 }
 
 removeOldNodeKeyFromKnownHosts () {
@@ -162,7 +182,8 @@ printSettings () {
 }
 
 main () {
-	setInterfaceNames $@
+  installSSHCopyId
+	setInterfaceName $@
 	setupStaticIp
 	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
@@ -172,4 +193,4 @@ main () {
 	printSettings
 }
 
-main
+main $@
