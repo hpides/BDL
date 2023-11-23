@@ -1,9 +1,19 @@
-# Usage: Either write the Ethernet interfaces here or provide them as arguments.
-# When the internet he frst argument is the Pi cluster connection & the second argument is the
-# internet connection.
+# Usage: Either let the script try to identify the interfaces automatically or provide
+# them as script inputs.
+# When not providing arguments the interfaces are selected automatically. Make sure
+# that you keep the original name of the USB LAN interface, i.e. 'USB 10/100/1000 LAN'.
+#
+# Example:
+#	 ./setupWorkstationNetwork.sh
+#
+# When the first argument 6 is the Pi cluster connection ID & the second argument 69 is the
+# internet connection ID.
 #
 # Example:
 #	 ./setupWorkstationNetwork.sh 6 69
+#
+# Get the Ethernet devices with
+# ifconfig -a
 
 
 function checkIfNotAdmin () {
