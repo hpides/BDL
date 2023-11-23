@@ -4,8 +4,8 @@
 MASTERNODE=node01
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -17,9 +17,9 @@ piSSH () {
 }
 
 copyFilesToCluster () {
-	piSCP $SCRIPT_DIR/../examples/mapReduceWordCount/WordCount.java \~
-	piSCP $SCRIPT_DIR/../examples/mapReduceWordCount/file\* \~
-	piSCP $SCRIPT_DIR/runOnCluster/runMapReduceWordCountExample.sh \~
+	piSCP $PROJECT_DIR/examples/mapReduceWordCount/WordCount.java \~
+	piSCP $PROJECT_DIR/examples/mapReduceWordCount/file\* \~
+	piSCP $PROJECT_DIR/scripts/runOnCluster/runMapReduceWordCountExample.sh \~
 }
 
 checkIfFolderForWordCountIsMissing () {
@@ -40,7 +40,7 @@ runWordCount () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	createFoldersForWordCount
 	copyWordCountToCluster
 	runWordCount

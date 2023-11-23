@@ -3,7 +3,7 @@
 # internet connection.
 #
 # Example:
-#     ./setupWorkstationNetwork.sh eth0 eth1
+#	 ./setupWorkstationNetwork.sh eth0 eth1
 
 
 checkIfThereAreArguments () {
@@ -49,25 +49,25 @@ setupStaticIp () {
 
 enablePackageForwarding () {
 	echo "Enabling packet forwarding"
-    sudo sysctl -w net.inet.ip.forwarding=1
-    sudo sysctl -w net.inet6.ip6.forwarding=1
+	sudo sysctl -w net.inet.ip.forwarding=1
+	sudo sysctl -w net.inet6.ip6.forwarding=1
 }
 
 createANatRulesFileForPfctl () {
-    echo "scrub on $INTERNETCONNECTION reassemble tcp no-df random-id" > nat-rules
-    echo "nat on $INTERNETCONNECTION from 10.0.0.0/24 to any -> $INTERNETCONNECTION" >> nat-rules
+	echo "scrub on $INTERNETCONNECTION reassemble tcp no-df random-id" > nat-rules
+	echo "nat on $INTERNETCONNECTION from 10.0.0.0/24 to any -> $INTERNETCONNECTION" >> nat-rules
 }
 
 enableNewNatRules () {
-    sudo pfctl -e -f ./nat-rules
+	sudo pfctl -e -f ./nat-rules
 	wait
 	rm ./nat-rules
 }
 
 setupNat() {
 	echo "Setting up NAT"
-    createANatRulesFileForPfctl
-    enableNewNatRules
+	createANatRulesFileForPfctl
+	enableNewNatRules
 }
 
 getInternetIntoThePis () {
@@ -162,14 +162,14 @@ printSettings () {
 }
 
 main () {
-    setInterfaceNames $@
+	setInterfaceNames $@
 	setupStaticIp
-    getInternetIntoThePis
+	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
 	fi
 	setupPasswordlessSSH
-    printSettings
+	printSettings
 }
 
 main

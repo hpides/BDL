@@ -6,7 +6,7 @@
 # internet connection.
 #
 # Example:
-#     ./setupWorkstationNetwork.sh eth0 eth1
+#	 ./setupWorkstationNetwork.sh eth0 eth1
 #
 # Get the Ethernet devices with
 # ifconfig -a
@@ -112,6 +112,12 @@ writeHostnamesIntoHostsFile () {
 	done
 }
 
+removeOldSSHKeys () {
+	for keyItr in {1..5}; do
+		ssh-keygen -f ~/.ssh/known_hosts -R node0$keyItr
+	done
+}
+
 checkIfWeHaveAnSSHKey () {
 	[[ $(ls -A ~/.ssh/id_*) ]]
 }
@@ -194,6 +200,7 @@ main () {
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
 	fi
+	removeOldSSHKeys
 	setupPasswordlessSSH
 	printSettings
 }

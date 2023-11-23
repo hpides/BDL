@@ -3,18 +3,18 @@
 # internet connection.
 #
 # Example:
-#     ./setupWorkstationNetwork.sh 6 69
+#	 ./setupWorkstationNetwork.sh 6 69
 
 
 function checkIfNotAdmin () {
-    $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-    $out = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-    $(-not $out)
+	$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+	$out = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+	$(-not $out)
 }
 
 function runScriptOnlyAsAdmin () {
 	start-process powershell -verb runAs "$PSCommandPath"
-    exit
+	exit
 }
 
 function enablePackageForwarding () {
@@ -23,8 +23,8 @@ function enablePackageForwarding () {
 }
 
 function createNetSharingManager () {
-    regsvr32 hnetcfg.dll
-    $(New-Object -ComObject HNetCfg.HNetShare)
+	regsvr32 hnetcfg.dll
+	$(New-Object -ComObject HNetCfg.HNetShare)
 }
 
 function getInterfaceNameWithIndex ($ifindex) {
@@ -36,9 +36,9 @@ function getConnectionWithName ($m, $ifname) {
 }
 
 function getInterfaceConfiguration ($m, $ifname) {
-    $con = getConnectionWithName -m $m -ifname $ifname
+	$con = getConnectionWithName -m $m -ifname $ifname
 
-    $($m.INetSharingConfigurationForINetConnection.Invoke($con))
+	$($m.INetSharingConfigurationForINetConnection.Invoke($con))
 }
 
 function setInterfaceAsInternetProvider ($config) {
@@ -51,7 +51,7 @@ function configureInternetProviderSide ($m) {
 
 	$config = getInterfaceConfiguration -m $m -ifname $ifname
 
-    setInterfaceAsInternetProvider -config $config
+	setInterfaceAsInternetProvider -config $config
 }
 
 function setInterfaceAsInternetConsumer ($config) {
@@ -62,9 +62,9 @@ function setInterfaceAsInternetConsumer ($config) {
 function configureInternetConsumerSide ($m) {
 	$ifname = getInterfaceNameWithIndex -ifindex $CLUSTERCONNECTION
 
-    $config = getInterfaceConfiguration -m $m -ifname $ifname
+	$config = getInterfaceConfiguration -m $m -ifname $ifname
 
-    setInterfaceAsInternetConsumer -config $config
+	setInterfaceAsInternetConsumer -config $config
 }
 
 function shareInternet () {
@@ -93,14 +93,14 @@ function setINTERNETCONNECTION ($interfaceName) {
 }
 
 function getIdOfUsbEthernetDongle () {
-    $out = netstat -rn | select-string -pattern "Realtek USB GbE Family Controller"
-    $null = $out -match " ?(.*)\.\.\.[0-9]"
-    $($matches[1])
+	$out = netstat -rn | select-string -pattern "Realtek USB GbE Family Controller"
+	$null = $out -match " ?(.*)\.\.\.[0-9]"
+	$($matches[1])
 }
 
 function getIdOfInternetInterface () {
-    $out = get-netroute -destinationprefix '0.0.0.0/0', '::/0' | Select-Object -First 1
-    $out.ifIndex
+	$out = get-netroute -destinationprefix '0.0.0.0/0', '::/0' | Select-Object -First 1
+	$out.ifIndex
 }
 
 function setInterfaceNamesAutomatically () {
@@ -120,14 +120,14 @@ function setInterfaceNames ($argv) {
 
 function setupStaticIp () {
 	echo "Setting up static IP"
-    $null = remove-netipaddress -confirm:$false -interfaceindex $CLUSTERCONNECTION
-    $null = new-netipaddress -interfaceindex $CLUSTERCONNECTION -addressfamily IPv4 -ipaddress 10.0.0.10 -prefixlength 24
+	$null = remove-netipaddress -confirm:$false -interfaceindex $CLUSTERCONNECTION
+	$null = new-netipaddress -interfaceindex $CLUSTERCONNECTION -addressfamily IPv4 -ipaddress 10.0.0.10 -prefixlength 24
 }
 
 function checkIfHostsFileIsMissingHostnames () {
 	$out = $null
-    $out = select-string -path "$env:SystemRoot\System32\drivers\etc\hosts" -pattern "# Pi Cluster"
-    $($out -eq $null)
+	$out = select-string -path "$env:SystemRoot\System32\drivers\etc\hosts" -pattern "# Pi Cluster"
+	$($out -eq $null)
 }
 
 function writeHostnamesIntoHostsFile () {
@@ -150,13 +150,13 @@ function createNewSSHKey () {
 
 function checkIfKnownHostsFileExists () {
 	$out = test-path ~/.ssh/known_hosts
-    $($out -eq "true")
+	$($out -eq "true")
 }
 
 function checkIfNodeHostnameIsInKnownHosts ($nodeID) {
 	$out = $null
-    $out = select-string -path ~/.ssh/known_hosts -pattern "node0$nodeID"
-    $($out -ne $null)
+	$out = select-string -path ~/.ssh/known_hosts -pattern "node0$nodeID"
+	$($out -ne $null)
 }
 
 function checkIfOldNodeKeyIsInKnownHosts ($nodeID) {
@@ -168,10 +168,10 @@ function removeOldNodeKeyFromKnownHosts ($nodeID) {
 }
 
 function sshCopyID ($nodeID) {
-    $table = get-childitem ~/.ssh/*.pub | where {! $_.PSIsContainer}
-    foreach ($row in $table) {
-	    cat ~/.ssh/$($row.Name) | ssh -o ConnectTimeout=2 pi@node0$nodeID "cat >> ~/.ssh/authorized_keys"
-    }
+	$table = get-childitem ~/.ssh/*.pub | where {! $_.PSIsContainer}
+	foreach ($row in $table) {
+		cat ~/.ssh/$($row.Name) | ssh -o ConnectTimeout=2 pi@node0$nodeID "cat >> ~/.ssh/authorized_keys"
+	}
 }
 
 function copyPublicKeysToPIs ($nodeID) {
@@ -231,16 +231,16 @@ function printSettings () {
 
 function main ($argv) {
 	if (checkIfNotAdmin) {
-        runScriptOnlyAsAdmin
-    }
-    setInterfaceNames -argv $argv
-    getInternetIntoThePis
+		runScriptOnlyAsAdmin
+	}
+	setInterfaceNames -argv $argv
+	getInternetIntoThePis
 	setupStaticIp
 	if (checkIfHostsFileIsMissingHostnames) {
 		writeHostnamesIntoHostsFile
 	}
 	setupPasswordlessSSH
-    printSettings
+	printSettings
 }
 
 main -argv $args

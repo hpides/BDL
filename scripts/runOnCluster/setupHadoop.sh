@@ -51,6 +51,10 @@ deleteOldJDK () {
 	sudo rm -r /opt/java
 }
 
+downloadJDK () {
+	wget -q --progress=bar:force --show-progress https://cfdownload.adobe.com/pub/adobe/coldfusion/java/java8/java8u371/jdk/jdk-8u371-linux-aarch64.tar.gz
+}
+
 unpackJDKToOptJava () {
 	sudo mkdir -p /opt/java
 	sudo tar xzf jdk-8u371-linux-aarch64.tar.gz --directory /opt/java
@@ -66,6 +70,7 @@ EOF
 
 installOpenJDK () {
 	deleteOldJDK
+	downloadJDK
 	unpackJDKToOptJava
 	exportJDKEnvironemtVariables
 }
@@ -96,6 +101,10 @@ createHadoopTmpFolders () {
 	sudo mkdir /opt/hadoop_tmp/hdfs
 	sudo chown pi:hadoop -R /opt/hadoop_tmp
 	sudo chown pi:hadoop -R /opt/hadoop_tmp/hdfs
+}
+
+downloadHadoop () {
+	wget -q --progress=bar:force --show-progress https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
 }
 
 unpackHadoop () {
@@ -280,6 +289,7 @@ installHadoop () {
 	fi
 	deleteAllHadoopFolders
 	createHadoopTmpFolders
+	downloadHadoop
 	unpackHadoop
 	exportHadoopEnvironmentVariables
 	configureHadoop

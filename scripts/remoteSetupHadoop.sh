@@ -1,8 +1,8 @@
 #! /bin/bash
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -14,9 +14,7 @@ piSSH () {
 }
 
 copySetupScriptToClusterNode () {
-	piSCP $SCRIPT_DIR/runOnCluster/setupHadoop.sh \~
-	piSCP $SCRIPT_DIR/../dependencies/jdk-8u371-linux-aarch64.tar.gz \~
-	piSCP $SCRIPT_DIR/../dependencies/hadoop-3.3.6.tar.gz \~
+	piSCP $PROJECT_DIR/scripts/runOnCluster/setupHadoop.sh \~
 }
 
 runSetupScriptOnClusterNode () {
@@ -24,7 +22,7 @@ runSetupScriptOnClusterNode () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	for nodeItr in {1..5}; do
 		NODE=node0$nodeItr
 		echo "***********************************"

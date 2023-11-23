@@ -4,8 +4,8 @@
 HEADNODE=node01
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -17,7 +17,7 @@ piSSH () {
 }
 
 copyStartScriptToCluster () {
-	piSCP $SCRIPT_DIR/runOnCluster/startHadoop.sh \~
+	piSCP $PROJECT_DIR/scripts/runOnCluster/startHadoop.sh \~
 }
 
 startHadoop () {
@@ -25,7 +25,7 @@ startHadoop () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	copyStartScriptToCluster
 	startHadoop
 }

@@ -4,8 +4,8 @@
 MASTERNODE=node01
 
 
-getScriptDirectory () {
-	SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+getProjectDirectory () {
+	PROJECT_DIR=$( cd -- "$( dirname $( dirname -- "${BASH_SOURCE[0]}" ))" &> /dev/null && pwd )
 }
 
 piSCP () {
@@ -17,7 +17,7 @@ piSSH () {
 }
 
 copyStopScriptToCluster () {
-	piSCP $SCRIPT_DIR/runOnCluster/stopHadoop.sh \~
+	piSCP $PROJECT_DIR/scripts/runOnCluster/stopHadoop.sh \~
 }
 
 stopHadoop () {
@@ -25,7 +25,7 @@ stopHadoop () {
 }
 
 main () {
-	getScriptDirectory
+	getProjectDirectory
 	copyStopScriptToCluster
 	stopHadoop
 }
