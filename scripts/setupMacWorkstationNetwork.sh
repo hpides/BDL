@@ -15,6 +15,7 @@
 # Get the Ethernet devices with
 # ifconfig -a
 
+
 checkIfSSHCopyIdIsMissing () {
 	! command -v ssh-copy-id &> /dev/null
 }
@@ -185,8 +186,8 @@ printSettings () {
 }
 
 main () {
-  installSSHCopyId
-	setInterfaceName $@
+	installSSHCopyId
+	setInterfaceNames $@
 	setupStaticIp
 	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
