@@ -69,7 +69,7 @@ For this, you can collect two bonus points:
 ### Task Setup & Submission
 
 This task should be implemented in a Jupyter Notebook.   
-Submit the following files packaged into a zip file named `task03.zip`:  
+Submit the following files packaged into a zip file named `group<groupID>-task03.zip`:  
 \- `task03.ipynb`  
 \- `results.csv`  
 \- `runtime_number_of_trees.jpg`  
