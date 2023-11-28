@@ -1,6 +1,9 @@
 imgs
 dependencies
 scripts_rest
+tasks_rest
+tutorials_rest
 *nat-rules
 .metals
 .vscode
+.DS_Store
