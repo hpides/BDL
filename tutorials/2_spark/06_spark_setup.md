@@ -102,6 +102,16 @@ Start the Spark cluster by executing the following commands only on the head nod
 
 You can access the web UIs of Spark via http://node01:8080 and the history server via http://node01:18080, respectively.
 
+
+The connect server is intended to provide remote connectivity for Spark applications.
+However, when running the connect server on node01, there have been issues with the execution of spark-shell on node01.
+As a workaround, when working only with the spark-shell on node01, don't start the connect server:
+
+```bash
+/opt/spark/sbin/start-history-server.sh
+/opt/spark/sbin/start-all.sh
+```
+
 ### Word Count Example
 
 Type `spark-shell` and execute:
