@@ -63,7 +63,7 @@ Report three JPG files:
 #### Bonus
 
 For this, you can collect two bonus points:  
-\- Inspect other data preprocessing techniques that can enhance the performance of the trained model. Add the additional steps in the list of (other parameters) in the `results.csv`.  
+\- Inspect other data preprocessing techniques that can enhance the performance of the trained model (MSE). Add the additional steps in the list of (other parameters) in the `results.csv`.  
 \- In terms of train and test runtime, find the best set of parameters for your pipeline. Summarize the findings in a `config_set_bonus.txt` file.
 
 ### Task Setup & Submission
