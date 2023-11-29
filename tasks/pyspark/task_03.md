@@ -11,7 +11,7 @@ The Users dataset from the previous task should still reside in your clusters. I
 ```
 wget https://archive.org/download/stackexchange/stackoverflow.com-Users.7z
 [...]
-7za x stackoverflow.com-Tags.7z
+7za x stackoverflow.com-Users.7z
 ```
 
 1. Check the presence of the resulting file and its size by running `ls -l -h`.
