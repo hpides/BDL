@@ -35,7 +35,7 @@ Report the difference in the data size of the original training set (all feature
 
 ### 2. Train Model
 
-1. Train a Random Forest Regressor on the training set. Train models with different number of trees, i.e, train a model 10, 50, 100, 250, 500 trees. The model should be validated with cross validation. The metric of interest is Mean Squared Error (MSE). The target feature is the reputation.
+1. Train a Random Forest Regressor on the training set. Train models with different number of trees, i.e, train a model with 5, 10, and 20 trees. The metric of interest is Mean Squared Error (MSE). The target feature is the reputation.
 2. Look into configuration parameters for the Spark runtime or the Random Forest Regressor that might lower the runtime of the training. One of the configuration parameters should be the number of nodes since you need to compare the single node execution to the distributed execution. 
 3. Evaluate the model on the test set. Similarly to the training step, the metric of interest is the Mean Squared Error (MSE).
 
