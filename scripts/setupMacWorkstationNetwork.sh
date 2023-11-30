@@ -6,11 +6,17 @@
 # Example:
 #	 ./setupWorkstationNetwork.sh
 #
-# When the first argument eth0 is the Pi cluster connection & the second argument eth1 is the
+# Or only set the cluster connection name by yourself & let the internet connection specify itself.
+# When the first argument AX1234A is the Pi cluster connection name.
+#
+# Example:
+#	 ./setupWorkstationNetwork.sh AX1234A
+#
+# Experimental: When the first argument AX1234A is the Pi cluster connection name & the second argument eth0 is the
 # internet connection.
 #
 # Example:
-#	 ./setupWorkstationNetwork.sh eth0 eth1
+#	 ./setupWorkstationNetwork.sh AX1234A eth0
 #
 # Get the Ethernet devices with
 # ifconfig -a
@@ -30,16 +36,18 @@ installSSHCopyId () {
   fi
 }
 
-checkIfThereAreArguments () {
-	! [ "$#" -eq 0 ]
-}
-
-checkIfThereMoreThenTwoArguments () {
-	! [ "$#" -lt 2 ]
+checkIfThereIsOneArguments () {
+	[ "$#" -eq 1 ]
 }
 
 checkIfThereAreTwoArguments () {
-	checkIfThereAreArguments $@ && checkIfThereMoreThenTwoArguments $@
+	[ "$#" -eq 2 ]
+}
+
+setInterfaceNamesAutomatically () {
+	echo "Setting up interface names automatically"
+	CLUSTERCONNECTION=$(networksetup -listallhardwareports | grep -A 1 'USB 10/100/1000 LAN' | tail -n 1 | awk '{print $NF}')
+	INTERNETCONNECTION=$(netstat -rn | grep default | head -n 1 | awk '{print $NF}')
 }
 
 setCLUSTERCONNECTION () {
@@ -50,14 +58,18 @@ setINTERNETCONNECTION () {
 	INTERNETCONNECTION=$1
 }
 
-setInterfaceNamesAutomatically () {
-	echo "Setting up interface names automatically"
-	CLUSTERCONNECTION=$(networksetup -listallhardwareports | grep -A 1 'USB 10/100/1000 LAN' | tail -n 1 | awk '{print $NF}')
-	INTERNETCONNECTION=$(netstat -rn | grep default | head -n 1 | awk '{print $NF}')
+setupStaticIpWithVariable () {
+	echo "Setting up static IP"
+	networksetup -setmanual "$CLUSTERCONNECTION" 10.0.0.10 255.255.255.0
+	wait
 }
 
 setInterfaceNames () {
-	if checkIfThereAreTwoArguments $@; then
+	if checkIfThereIsOneArguments $@; then
+		setInterfaceNamesAutomatically
+		setCLUSTERCONNECTION $1
+		setupStaticIpWithVariable
+	elif checkIfThereAreTwoArguments $@; then
 		setCLUSTERCONNECTION $1
 		setINTERNETCONNECTION $2
 	else
@@ -65,7 +77,7 @@ setInterfaceNames () {
 	fi
 }
 
-setupStaticIp () {
+setupStaticIpWithConstantName () {
 	echo "Setting up static IP"
 	networksetup -setmanual 'USB 10/100/1000 LAN' 10.0.0.10 255.255.255.0
 	wait
@@ -188,7 +200,7 @@ printSettings () {
 main () {
 	installSSHCopyId
 	setInterfaceNames $@
-	setupStaticIp
+	setupStaticIpWithConstantName
 	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
