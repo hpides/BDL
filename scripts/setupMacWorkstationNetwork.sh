@@ -6,17 +6,11 @@
 # Example:
 #	 ./setupWorkstationNetwork.sh
 #
-# Or only set the cluster connection name by yourself & let the internet connection specify itself.
-# When the first argument AX1234A is the Pi cluster connection name.
-#
-# Example:
-#	 ./setupWorkstationNetwork.sh AX1234A
-#
-# Experimental: When the first argument AX1234A is the Pi cluster connection name & the second argument eth0 is the
+# When the first argument AX88179A is the Pi cluster connection name & the second argument eth1 is the
 # internet connection.
 #
 # Example:
-#	 ./setupWorkstationNetwork.sh AX1234A eth0
+#	 ./setupWorkstationNetwork.sh AX88179A eth1
 #
 # Get the Ethernet devices with
 # ifconfig -a
@@ -36,18 +30,20 @@ installSSHCopyId () {
   fi
 }
 
-checkIfThereIsOneArguments () {
+checkIfThereAreArguments () {
 	[ "$#" -eq 1 ]
 }
 
-checkIfThereAreTwoArguments () {
-	[ "$#" -eq 2 ]
+checkIfThereAreArguments () {
+	! [ "$#" -eq 0 ]
 }
 
-setInterfaceNamesAutomatically () {
-	echo "Setting up interface names automatically"
-	CLUSTERCONNECTION=$(networksetup -listallhardwareports | grep -A 1 'USB 10/100/1000 LAN' | tail -n 1 | awk '{print $NF}')
-	INTERNETCONNECTION=$(netstat -rn | grep default | head -n 1 | awk '{print $NF}')
+checkIfThereMoreThenTwoArguments () {
+	! [ "$#" -lt 2 ]
+}
+
+checkIfThereAreTwoArguments () {
+	checkIfThereAreArguments $@ && checkIfThereMoreThenTwoArguments $@
 }
 
 setCLUSTERCONNECTION () {
@@ -58,17 +54,22 @@ setINTERNETCONNECTION () {
 	INTERNETCONNECTION=$1
 }
 
-setupStaticIpWithVariable () {
-	echo "Setting up static IP"
-	networksetup -setmanual "$CLUSTERCONNECTION" 10.0.0.10 255.255.255.0
-	wait
+setNetworkInterfaceNamesAutomatically () {
+	echo "Setting up internet interface names automatically"
+	INTERNETCONNECTION=$(netstat -rn | grep default | head -n 1 | awk '{print $NF}')
+	networksetup -setmanual 'USB 10/100/1000 LAN' 10.0.0.10 255.255.255.0
+}
+
+setInterfaceNamesAutomatically () {
+	echo "Setting up interface names automatically"
+	CLUSTERCONNECTION=$(networksetup -listallhardwareports | grep -A 1 'USB 10/100/1000 LAN' | tail -n 1 | awk '{print $NF}')
+	setNetworkInterfaceNamesAutomatically
 }
 
 setInterfaceNames () {
-	if checkIfThereIsOneArguments $@; then
-		setInterfaceNamesAutomatically
+	if checkIfThereAreArguments $@; then
 		setCLUSTERCONNECTION $1
-		setupStaticIpWithVariable
+		setNetworkInterfaceNamesAutomatically
 	elif checkIfThereAreTwoArguments $@; then
 		setCLUSTERCONNECTION $1
 		setINTERNETCONNECTION $2
@@ -77,7 +78,7 @@ setInterfaceNames () {
 	fi
 }
 
-setupStaticIpWithConstantName () {
+setupStaticIp () {
 	echo "Setting up static IP"
 	networksetup -setmanual 'USB 10/100/1000 LAN' 10.0.0.10 255.255.255.0
 	wait
@@ -200,7 +201,7 @@ printSettings () {
 main () {
 	installSSHCopyId
 	setInterfaceNames $@
-	setupStaticIpWithConstantName
+	setupStaticIp
 	getInternetIntoThePis
 	if checkIfHostsFileIsMissingHostnames; then
 		writeHostnamesIntoHostsFile
