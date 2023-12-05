@@ -25,22 +25,10 @@ Next we enable IP forwarding. Open a Windows PowerShell as administrator and ena
 ```bash
 Set-NetIPInterface -Forwarding Enabled
 Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table
-
-ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
-------- --------------               ------------- --------------- ----------
-      1 Loopback Pseudo-Interface 1           IPv6       Connected    Enabled
-      1 Loopback Pseudo-Interface 1           IPv4       Connected    Enabled
-      1 WLAN                                  IPv4       Connected    Enabled
-      3 Ethernet                              IPv6       Connected    Enabled
-      3 Ethernet                              IPv4       Connected    Enabled
 ```
 
-Next we enable IP forwarding. Open a Windows PowerShell as administrator and enable IP forwarding with `Set-NetIPInterface -Forwarding Enabled`. After that check if IP forwarding is activated with `Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table`.
-
-```bash
-Set-NetIPInterface -Forwarding Enabled
-Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table
-
+The output should look similar to this:
+```
 ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
 ------- --------------               ------------- --------------- ----------
       1 Loopback Pseudo-Interface 1           IPv6       Connected    Enabled
