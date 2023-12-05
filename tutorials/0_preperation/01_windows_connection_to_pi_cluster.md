@@ -39,6 +39,7 @@ ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
 ```
 
 Next we set the hostnames for our cluster nodes. Open an editor as an administrator and add at the bottom of file `C:\Windows\System32\drivers\etc\hosts` the following lines.
+Important: Only use spaces (no tabs etc.) as column delimiters!
 
 hosts:
 
@@ -46,10 +47,10 @@ hosts:
 [...]
 
 # Pi Cluster
-10.0.0.1	node01
-10.0.0.2	node02
-10.0.0.3	node03
-10.0.0.4	node04
+10.0.0.1    node01
+10.0.0.2    node02
+10.0.0.3    node03
+10.0.0.4    node04
 10.0.0.5	node05
 ```
 
