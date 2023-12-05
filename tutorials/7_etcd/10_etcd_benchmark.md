@@ -1,8 +1,8 @@
 # etcd
 
-## Installing etcd's Benchmark Client
+## Installing etcd's Benchmark Tool
 
-You will need to use etcd's Go-based benchmark client in the task. For this, please install Go on `node01`. For this, please execute the remaining commands on `node01`.
+You will need to use etcd's Go-based benchmark tool in the task. For this, please install Go on `node01`. For this, please execute the remaining commands on `node01`.
 
 ```bash
 wget -q --progress=bar:force --show-progress https://go.dev/dl/go1.21.4.linux-arm64.tar.gz
@@ -19,7 +19,7 @@ echo export PATH=$PATH:/usr/local/go/bin  >> ~/.environment_variables &&
 source ~/.environment_variables
 ```
 
-Also, please download the benchmark client, which is located in the `etcd` GitHub repository.
+Also, please download the benchmark tool, which is located in the `etcd` GitHub repository.
 
 ```bash
 wget -q --progress=bar:force --show-progress https://github.com/etcd-io/etcd/archive/refs/heads/main.zip
