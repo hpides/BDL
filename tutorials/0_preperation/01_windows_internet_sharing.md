@@ -16,4 +16,6 @@ Under sharing check the checkbox and select the name of the network device conne
 
 ![networkSharing.png](../../pictures/networkSharing.png)
 
+Windows might have reset your network configuration of the Ethernet connection from last step after this, in which case you simply need to change it again.
+
 Done! Now your Pi cluster should have a working internet connection.

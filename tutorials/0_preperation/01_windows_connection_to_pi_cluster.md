@@ -25,22 +25,10 @@ Next we enable IP forwarding. Open a Windows PowerShell as administrator and ena
 ```bash
 Set-NetIPInterface -Forwarding Enabled
 Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table
-
-ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
-------- --------------               ------------- --------------- ----------
-      1 Loopback Pseudo-Interface 1           IPv6       Connected    Enabled
-      1 Loopback Pseudo-Interface 1           IPv4       Connected    Enabled
-      1 WLAN                                  IPv4       Connected    Enabled
-      3 Ethernet                              IPv6       Connected    Enabled
-      3 Ethernet                              IPv4       Connected    Enabled
 ```
 
-Next we enable IP forwarding. Open a Windows PowerShell as administrator and enable IP forwarding with `Set-NetIPInterface -Forwarding Enabled`. After that check if IP forwarding is activated with `Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table`.
-
-```bash
-Set-NetIPInterface -Forwarding Enabled
-Get-NetIPInterface | select ifIndex,InterfaceAlias,AddressFamily,ConnectionState,Forwarding | Sort-Object -Property IfIndex | Format-Table
-
+The output should look similar to this:
+```
 ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
 ------- --------------               ------------- --------------- ----------
       1 Loopback Pseudo-Interface 1           IPv6       Connected    Enabled
@@ -51,6 +39,7 @@ ifIndex InterfaceAlias               AddressFamily ConnectionState Forwarding
 ```
 
 Next we set the hostnames for our cluster nodes. Open an editor as an administrator and add at the bottom of file `C:\Windows\System32\drivers\etc\hosts` the following lines.
+Important: Only use spaces (no tabs etc.) as column delimiters!
 
 hosts:
 
@@ -58,10 +47,10 @@ hosts:
 [...]
 
 # Pi Cluster
-10.0.0.1	node01
-10.0.0.2	node02
-10.0.0.3	node03
-10.0.0.4	node04
+10.0.0.1    node01
+10.0.0.2    node02
+10.0.0.3    node03
+10.0.0.4    node04
 10.0.0.5	node05
 ```
 
