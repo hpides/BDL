@@ -162,7 +162,7 @@ By what factors do the average latency and the throughput (requests per second) 
 
 #### Read - Scalability Evaluation
 
-Now, we want to investigate the scalability of etcd by using different cluster sizes. For this, use a benchmark configuration with 500000 (500k) operations, a key space size of 100, 2000 clients, 2000 connections, and a value size of 64.
+Now, we want to investigate the scalability of etcd by using different cluster sizes. For this, use a benchmark configuration with 500000 (500k) operations, 2000 clients, and 2000 connections.
 Start with 4 cluster nodes and incrementally remove one node from the cluster (first node05, followed by node04 and node03). Note to also remove the removed endpoint(s) from the `etcdctl` or `benchmark` command.
 For each cluster size, one run is sufficient.
 Add the summary, response time histogram, and latency distribution of each run to `task04.txt`. Note: If multiple answers are required in one subtask, for example, the results of different benchmark configurations, add enough context so that it is clarified how the results were generated.
