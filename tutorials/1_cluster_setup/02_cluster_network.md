@@ -12,22 +12,30 @@ Next we set up the network and ssh for each Pi node. First open a Terminal and l
 ssh pi@node0<nodeID>
 ```
 
-On the Pi we first set up the network interface. Create a new file `/etc/network/interfaces.d/eth0` and add the node IP, the Netmask with Subnet length 24, the workstation IP as the default gateway and Googles server as the DNS nameserver.
-
-```bash
-sudo nano /etc/network/interfaces.d/eth0
-```
-
-eth0:
+On the Pi we first set up the network interface. Check the current configuration with the following ```nmcli``` command
 
 ```
-auto eth0
-iface eth0 inet static
-	address 10.0.0.<nodeID>
-	netmask 255.255.255.0
-	gateway 10.0.0.10
-	dns-nameserver 8.8.8.8
+nmcli -g ipv4.method,ipv4.addresses,ipv4.gateway,ipv4.dns connection show eth0
 ```
+
+Proceed to add the node IP, the Netmask with Subnet length 24, the workstation IP as the default gateway and Googles server as the DNS nameserver. Make sure to replace **nodeID -> [1-5]**.
+
+```
+sudo nmcli connection modify eth0 \
+  ipv4.method manual \
+  ipv4.addresses 10.0.0.nodeID/24 \
+  ipv4.gateway 10.0.0.10 \
+  ipv4.dns 8.8.8.8 \
+  connection.autoconnect yes \
+  connection.autoconnect-priority 100
+```
+
+Activate the new connection.
+
+```
+sudo nmcli connection up eth0
+```
+
 
 Next also modify `/etc/hosts` as previously on your laptop such that each node of the cluster can see all other nodes. Add the mapping of hostnames to IPs to the end of the file. **Remove the line containing the loopback address** `127.0.1.1 node0[1-5]`
 
