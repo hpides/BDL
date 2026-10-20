@@ -18,7 +18,7 @@ For node_exporter we create on all nodes an `/opt/node-exporter` folder and down
 ```bash
 sudo mkdir -p /opt/node-exporter
 cd /opt/node-exporter
-sudo wget -O node-exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-arm64.tar.gz
+sudo wget -O node-exporter.tar.gz https://github.com/prometheus/node_exporter/releases/download/v1.12.1/node_exporter-1.12.1.linux-arm64.tar.gz
 ```
 
 Next we install node-exporter by extracting the node_exporter.

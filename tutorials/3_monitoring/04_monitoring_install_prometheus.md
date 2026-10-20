@@ -8,9 +8,9 @@ First we download and extract the Prometheus package. These instructions should 
 
 ```bash
 cd ~
-wget https://github.com/prometheus/prometheus/releases/download/v2.22.0/prometheus-2.22.0.linux-armv7.tar.gz
-tar xzf prometheus-2.22.0.linux-armv7.tar.gz
-mv prometheus-2.22.0.linux-armv7/ prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v3.15.0/prometheus-3.15.0.linux-armv7.tar.gz
+tar xzf prometheus-3.15.0.linux-armv7.tar.gz
+mv prometheus-3.15.0.linux-armv7/ prometheus
 ```
 
 Next we create a
