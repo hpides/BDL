@@ -7,15 +7,18 @@ Now we install the dashboard on our cluster. These instructions should be execut
 First we add a new Grafana source to our package manager.
 
 ```bash
-wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
-echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+sudo mkdir -p /etc/apt/keyrings
+sudo wget -O /etc/apt/keyrings/grafana.asc https://apt.grafana.com/gpg-full.key
+sudo chmod 644 /etc/apt/keyrings/grafana.asc
+
+echo "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 ```
 
 After that we need to update the package manager.
 
 ```bash
 sudo apt update
-sudo apt --yes install grafana
+sudo apt-get install grafana
 ```
 
 Finally we enable the Grafana service, start it and check the status of the servcie. You should see an output that says `active (running)`.
