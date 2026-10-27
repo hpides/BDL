@@ -37,7 +37,7 @@ Afterwards click on the `Import dashboard`.
 
 ![grafanaImportDashboard.jpg](../../pictures/grafanaImportDashboard.png)
 
-In the next window drag and drop the `Pi Cluster.json` file into the box and click on Import
+In the next window drag and drop the `dashboards/Pi Cluster.json` file into the box and click on Import
 
 ![grafanaClickOnImport.jpg](../../pictures/grafanaClickOnImport.png)
 
