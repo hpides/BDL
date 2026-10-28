@@ -2,16 +2,18 @@
 
 ### Prerequisites
 
-You have already done the *Setup Hadoop* tutorial and have a cluster of five nodes with HDFS running. If not otherwise noted all commands have to be run on all nodes.
+You have already done the *Setup Hadoop* tutorial and have a cluster of five nodes with HDFS running.
+
+**If not otherwise noted all commands have to be run on all nodes.**
 
 ### Spark Installation
 ssh into the node and run the following commands.
 
 ```
-sudo wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
-sudo tar -xvzf spark-3.4.1-bin-hadoop3.tgz -C /opt/
-sudo rm spark-3.4.1-bin-hadoop3.tgz
-sudo mv /opt/spark-3.4.1-bin-hadoop3 /opt/spark
+sudo wget https://dlcdn.apache.org/spark/spark-3.5.9/spark-3.5.9-bin-hadoop3.tgz
+sudo tar -xvzf spark-3.5.9-bin-hadoop3.tgz -C /opt/
+sudo rm spark-3.5.9-bin-hadoop3.tgz
+sudo mv /opt/spark-3.5.9-bin-hadoop3 /opt/spark
 sudo chown pi:hadoop -R /opt/spark
 mkdir /tmp/spark-events
 sudo chown pi:hadoop -R /tmp/spark-events
@@ -57,13 +59,13 @@ Welcome to
       ____              __
      / __/__  ___ _____/ /__
     _\ \/ _ \/ _ `/ __/  '_/
-   /___/ .__/\_,_/_/ /_/\_\   version 3.4.1
+   /___/ .__/\_,_/_/ /_/\_\   version 3.5.9
       /_/
 
-Using Scala version 2.12.17, OpenJDK 64-Bit Server VM, 1.8.0_382
+Using Scala version 2.12.18, Java HotSpot(TM) 64-Bit Server VM, 1.8.0_371
 Branch HEAD
-Compiled by user centos on 2023-06-19T23:01:01Z
-Revision 6b1ff22dde1ead51cbf370be6e48a802daae58b6
+Compiled by user holden on 2026-07-12T18:40:50Z
+Revision 7c14a3c28b141cc97a330c4d0f5d2a6da7267f85
 Url https://github.com/apache/spark
 Type --help for more information.
 ```
