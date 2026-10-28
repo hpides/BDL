@@ -48,3 +48,7 @@ hosts:
 ```
 
 Now you are able to connect to the pi nodes with e.g. `ssh pi@node01` when they are running.
+
+### Troubleshooting
+
+- If you use a terminal app like iTerm, you need to grant permissions for local network access. Go to System Settings -> Privacy & Security -> Local Network and enable it for your app (MacOS 26)
