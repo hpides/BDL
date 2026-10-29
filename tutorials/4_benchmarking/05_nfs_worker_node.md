@@ -10,6 +10,13 @@ SSH into each worker node:
 ssh pi@node0[2...5]
 ```
 
+Install nfs-common on each worker node:
+
+```
+sudo apt-get update
+sudo apt-get install nfs-common -y
+```
+
 Create a directory for mounting the shared NFS folder and set the ownership:
 
 ```bash
