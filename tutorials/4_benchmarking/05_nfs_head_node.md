@@ -10,11 +10,12 @@ SSH into the head node:
 ssh pi@node01
 ```
 
-Install the NFS server package, create a shared directory, and set the ownership:
+Install the NFS server and common package, create a shared directory, and set the ownership:
 
 ```bash
 sudo apt-get update
 sudo apt-get install nfs-kernel-server -y
+sudo apt-get install nfs-common -y
 sudo mkdir /mnt/nfs
 sudo chown -R pi:pi /mnt/nfs
 ```
