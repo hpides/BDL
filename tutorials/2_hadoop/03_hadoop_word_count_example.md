@@ -113,7 +113,7 @@ Next we compile our program, run it with Hadoop and print the output. When every
 ```bash
 hadoop com.sun.tools.javac.Main WordCount.java
 jar cf WordCount.jar WordCount*.class
-rm 'WordCount\$IntSumReducer.class' 'WordCount\$TokenizerMapper.class' WordCount.class
+rm 'WordCount$IntSumReducer.class' 'WordCount$TokenizerMapper.class' WordCount.class
 
 hdfs dfs -rm -r /WordCount/output
 hadoop jar WordCount.jar WordCount /WordCount/input /WordCount/output
