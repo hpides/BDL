@@ -68,7 +68,7 @@ Your workstation will forward the messages between the two APIs.
     node03 or use the tutorial's download command there. 
 
 2.  Start a worker on node02 and another on node04.
-    Derive the API commands for node01 and node03 with the help of the [distributed-llama documentation](https://github.com/b4rtaz/distributed-llama/tree/main). Connect each root only to its assigned worker.
+    Derive the API commands for node01 and node03 with the help of the [distributed-llama documentation](https://github.com/b4rtaz/distributed-llama/tree/main). Connect each root only to its assigned worker. It is recommended to use at least ```--max-seq-len 4096```, as this determines how many tokens are available for the whole discussion.
 
     Wait for both servers to finish loading.
 
