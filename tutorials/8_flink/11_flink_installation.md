@@ -7,7 +7,7 @@ ssh into the node and run the following commands.
 
 ```
 sudo rm -rf /opt/flink*
-wget -q --progress=bar:force --show-progress [https://archive.apache.org/dist/flink/flink-1.8.3/flink-1.8.3-bin-scala_2.12.tgz](https://dlcdn.apache.org/flink/flink-2.3.0/flink-2.3.0-bin-scala_2.12.tgz)
+wget -q --progress=bar:force --show-progress https://dlcdn.apache.org/flink/flink-2.3.0/flink-2.3.0-bin-scala_2.12.tgz
 sudo tar -xzf flink-2.3.0-bin-scala_2.12.tgz
 rm flink-2.3.0-bin-scala_2.12.tgz
 sudo mv flink-2.3.0 /opt/flink
