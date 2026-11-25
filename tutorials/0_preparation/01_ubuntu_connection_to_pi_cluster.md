@@ -4,7 +4,7 @@ Now we will set up the Ubuntu workstation to be able to ssh into the cluster nod
 
 ### Setup Workstation Network
 
-First insert the Ethernet USB adapter into your laptop and then figure out which Ethernet device is connected to the internet and which Ethernet device is connected to the Pi cluster. `ifconfig -a` helps you to figure out the device name. In the following example is `eth0` the device connected to the internet and `eth1` the device connected to the Pi cluster.
+First insert the Ethernet USB adapter into your laptop and then figure out which Ethernet device is connected to the internet and which Ethernet device is connected to the Pi cluster. `ifconfig -a` helps you to figure out the device name (you might need to use `if a`). In the following example is `eth0` the device connected to the internet and `eth1` the device connected to the Pi cluster.
 
 ```bash
 ifconfig -a
