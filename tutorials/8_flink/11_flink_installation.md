@@ -4,7 +4,7 @@ You need to already have a cluster of five nodes running and the Hadoop tutorial
 
 ### Java Version
 The Flink version we are going to install will need Java 11 (or 17). If not installed yet, follow the following instruction to install Java 11 on each node.
-  1. [Download Java 11 - aarch64 version]([http://node01:8081/#/taskmanagers](https://adoptium.net/temurin/releases?version=11)) 
+  1. [Download Java 11 - aarch64 version](https://adoptium.net/temurin/releases?version=11)
   2. From your local Downloads directory: scp OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.33.1_1.tar.gz pi@<node01-05>:~/
   3. Per node perform:
   ```
