@@ -1,12 +1,10 @@
 ## Flink
 
 ### Streaming Word Count Example
-After starting the Flink cluster you can run a Flink job with `flink run`.
-In the following example we delete an existing output file when there is one,
-run the Flink example word count and
-print the results from the result file into the console.
-
+In the following example we delete an existing output file when there is one, run the Flink example word count and print the results from the result file into the console.
 All the following commands until the end of the file are executed only on the head node.
+
+#### Prepare Word Count Example:
 Create a `WordCountFlink.java` file with the following content.
 
 ```java
@@ -14,11 +12,17 @@ package wordcountflink;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.util.ParameterTool;
+import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.api.common.serialization.SimpleStringEncoder;
+import org.apache.flink.connector.file.sink.FileSink;
+import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.OnCheckpointRollingPolicy;
+import org.apache.flink.connector.file.src.FileSource;
+import org.apache.flink.connector.file.src.reader.TextLineInputFormat;
+import org.apache.flink.core.fs.Path;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
-
 
 public class WordCountFlink {
 
@@ -80,7 +84,10 @@ public class WordCountFlink {
 		DataStream<String> text;
 		if (params.has("input")) {
 			// read the text file from given input path
-			text = env.readTextFile(params.get("input"));
+			FileSource<String> source = FileSource
+				.forRecordStreamFormat(new TextLineInputFormat(), new Path(params.get("input")))
+                .build();
+			text = env.fromSource(source, WatermarkStrategy.noWatermarks(), "WordCount input");
 		} else {
 			System.out.println("Executing WordCountFlink example with default input data set.");
 			System.out.println("Use --input to specify file input.");
@@ -92,15 +99,17 @@ public class WordCountFlink {
 			// split up the lines in pairs (2-tuples) containing: (word,1)
 			text.flatMap(new Tokenizer())
 			// group by the tuple field "0" and sum up tuple field "1"
-			.keyBy(0).sum(1);
+			.keyBy(wordAndCount -> wordAndCount.f0).sum(1);
 
 		// emit result
-		if (params.has("output")) {
-			counts.writeAsText(params.get("output"));
-		} else {
-			System.out.println("Printing result to stdout. Use --output to specify output path.");
-			counts.print();
-		}
+		env.enableCheckpointing(5_000);
+		FileSink<Tuple2<String, Integer>> sink = FileSink
+			.forRowFormat(
+				new Path(params.get("output")),
+				new SimpleStringEncoder<Tuple2<String, Integer>>("UTF-8"))
+			.withRollingPolicy(OnCheckpointRollingPolicy.build())
+			.build();
+		counts.sinkTo(sink);
 
 		// execute program
 		env.execute("Streaming WordCountFlink");
@@ -141,10 +150,20 @@ mkdir wordcountflink
 javac -classpath ".:/opt/flink/lib/*" -d wordcountflink WordCountFlink.java
 jar cfe WordCountFlink.jar wordcountflink.WordCountFlink -C wordcountflink .
 ```
+Note: if multiple java versions are installed, you might need to fix the path. To check the version and use the right one, use
+```bash
+/opt/java/jdk-11/bin/javac -version
+/opt/java/jdk-11/bin/javac -classpath '.:/opt/flink/lib/*' -d wordcountflink WordCountFlink.java
+```
+instead of `javac -classpath ".:/opt/flink/lib/*" -d wordcountflink WordCountFlink.java`.
+
+
+#### Run Word Count Example:
 
 Run the example with the following commands.
 
 ```bash
+/opt/hadoop/sbin/start-dfs.sh
 hadoop fs -rm -r -f /WordCount/output/flink_out
 flink run --jobmanager node01:8081 ~/WordCountFlink.jar --input hdfs://node01:9000/WordCount/input/file01 --output hdfs://node01:9000/WordCount/output/flink_out
 ```
@@ -152,5 +171,6 @@ flink run --jobmanager node01:8081 ~/WordCountFlink.jar --input hdfs://node01:90
 Show the output files in the Hadoop distributed file system with the following command.
 
 ```bash
-hadoop fs -cat /WordCount/output/flink_out
+hadoop fs -ls -R /WordCount/output/flink_out
+hadoop fs -cat '/WordCount/output/flink_out/*/part-*'
 ```
